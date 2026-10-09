@@ -54,6 +54,7 @@ button.primary { background:#806336; border-color:#bd995e; }
 #history { font-size:13px; line-height:1.9; max-height:200px; overflow:auto; }
 .hint { color:var(--muted); font-size:12px; line-height:1.8; }
 footer { padding:18px; text-align:center; color:#777e8a; font-size:11px; }
+
 @media(max-width:760px) {
   main { padding:10px; }
   .layout { grid-template-columns:1fr; }
@@ -122,7 +123,6 @@ footer { padding:18px; text-align:center; color:#777e8a; font-size:11px; }
 
 <footer>ROYAL CHESS 3D · GITHUB PAGES</footer>
 
-<!-- Gunakan versi yang mendukung THREE.OrbitControls global -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
@@ -159,7 +159,6 @@ if (!window.Chess) {
   );
   return;
 }
-
 if (!THREE.OrbitControls) {
   showError(
     'OrbitControls tidak berhasil dimuat.<br>' +
@@ -208,9 +207,10 @@ function startGame() {
   controls.maxPolarAngle = Math.PI * 0.47;
   controls.target.set(0, 0, 0);
 
-  scene.add(new THREE.HemisphereLight(0xe6edff, 0x54402b, 1.8));
+  // Pencahayaan disesuaikan agar bidak hitam lebih pekat.
+  scene.add(new THREE.HemisphereLight(0xe6edff, 0x54402b, 1.2));
 
-  const keyLight = new THREE.DirectionalLight(0xffe7c1, 2.8);
+  const keyLight = new THREE.DirectionalLight(0xffe7c1, 2.0);
   keyLight.position.set(-5, 12, 7);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.set(1024, 1024);
@@ -220,7 +220,7 @@ function startGame() {
   keyLight.shadow.camera.bottom = -7;
   scene.add(keyLight);
 
-  const fill = new THREE.DirectionalLight(0xa9c8ff, 0.8);
+  const fill = new THREE.DirectionalLight(0xa9c8ff, 0.35);
   fill.position.set(6, 8, -6);
   scene.add(fill);
 
@@ -233,21 +233,38 @@ function startGame() {
   const markerGroup = new THREE.Group();
   scene.add(boardGroup, piecesGroup, markerGroup);
 
+  // Bentuk bidak dipertahankan; hanya material warnanya yang diubah.
   const whiteMat = new THREE.MeshStandardMaterial({
-    color:0xf0dfbd, metalness:0.16, roughness:0.30
+    color:0xfaf5e9,
+    metalness:0.12,
+    roughness:0.24
   });
+
   const blackMat = new THREE.MeshStandardMaterial({
-    color:0x292d37, metalness:0.35, roughness:0.27
+    color:0x050505,
+    metalness:0.28,
+    roughness:0.19
   });
+
   const goldMat = new THREE.MeshStandardMaterial({
-    color:0xc6a15f, metalness:0.68, roughness:0.26
+    color:0xc6a15f,
+    metalness:0.68,
+    roughness:0.26
   });
+
+  // Petak papan sekarang putih terang dan hitam pekat.
   const lightSquare = new THREE.MeshStandardMaterial({
-    color:0xe8dfcc, roughness:0.42
+    color:0xf5f5f0,
+    roughness:0.58,
+    metalness:0
   });
+
   const darkSquare = new THREE.MeshStandardMaterial({
-    color:0x343b49, roughness:0.42
+    color:0x101010,
+    roughness:0.58,
+    metalness:0
   });
+
   const squareMeshes = new Map();
 
   function box(parent, w,h,d, material,x,y,z) {
@@ -336,6 +353,7 @@ function startGame() {
       -BOARD/2-0.07,0.32,0);
   }
 
+  // Geometri semua bidak di bawah tetap sama seperti desain awal.
   function createPiece(type,color,square) {
     const group = new THREE.Group();
     const mat = color==='w' ? whiteMat : blackMat;
@@ -384,7 +402,6 @@ function startGame() {
       muzzle.rotation.x=-0.15;
       const ear=box(group,0.06,0.15,0.07,mat,0,0.87,-0.04);
       ear.rotation.z=-0.15;
-      // Mata kecil kuda
       const eyeMat = new THREE.MeshBasicMaterial({
         color:color==='w'?0x24201b:0xf0d9aa
       });
