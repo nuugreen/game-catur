@@ -3,165 +3,119 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NUGREEN | Royal 3D Chess</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NUGREEN Royal Chess 3D</title>
 <style>
-:root {
-  --bg:#141516;
-  --panel:#1c1e1f;
-  --line:#303233;
-  --gold:#a58d58;
-  --text:#d0d0cc;
-  --muted:#858784;
-}
+:root{--bg:#151716;--panel:#1d1f1e;--line:#353733;--gold:#a48c5c;--text:#d2d0c9;--muted:#888980}
 *{box-sizing:border-box}
-body{
-  margin:0;background:radial-gradient(ellipse at top,#242525,#141516 70%);
-  color:var(--text);font-family:Arial,Helvetica,sans-serif
-}
+body{margin:0;background:radial-gradient(ellipse at top,#262825,#151716 72%);color:var(--text);font-family:Arial,sans-serif}
 button,select{font:inherit}
 .app{max-width:1450px;margin:auto;padding:18px}
 header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
 .brand{display:flex;align-items:center;gap:12px}
-.logo{
-  width:44px;height:44px;display:grid;place-items:center;border-radius:10px;
-  border:1px solid #655638;color:#b8a071;font-size:23px;font-weight:bold;
-  background:#202120
-}
-h1{font-size:clamp(20px,3vw,29px);letter-spacing:2px;margin:0;color:#d0d0cc}
-.subtitle{font-size:11px;letter-spacing:2px;color:#858784;margin-top:5px}
-.tag{border:1px solid #42403a;border-radius:20px;padding:8px 12px;font-size:10px;letter-spacing:1px;color:#a99a77}
+.logo{width:44px;height:44px;display:grid;place-items:center;border:1px solid #65583d;border-radius:10px;color:#b09b6f;font-size:23px;font-weight:bold;background:#202220}
+h1{font-size:clamp(20px,3vw,29px);letter-spacing:2px;margin:0}
+.subtitle{font-size:11px;letter-spacing:2px;color:var(--muted);margin-top:5px}
+.tag{border:1px solid #424139;border-radius:20px;padding:8px 12px;font-size:10px;letter-spacing:1px;color:#a99a78}
 .layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:16px;align-items:start}
-.panel{background:#1b1d1e;border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.panel{background:#1c1e1d;border:1px solid var(--line);border-radius:13px;overflow:hidden}
 .panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
-.panel-title{font-size:12px;font-weight:bold;letter-spacing:1.5px;color:#c1c1bb}
-#status{font-size:12px;color:#b6a174;text-align:right}
-.dot{display:inline-block;width:7px;height:7px;background:#818b7b;border-radius:50%;margin-right:7px}
-#chessScene{width:100%;aspect-ratio:1;min-height:300px;position:relative;overflow:hidden;background:#181a1a;touch-action:none}
+.panel-title{font-size:12px;font-weight:bold;letter-spacing:1.5px}
+#status{font-size:12px;color:#b5a47d;text-align:right}
+.dot{display:inline-block;width:7px;height:7px;background:#7f8977;border-radius:50%;margin-right:7px}
+#chessScene{width:100%;aspect-ratio:1;min-height:300px;overflow:hidden;background:#191b1a;touch-action:none}
 #chessScene canvas{display:block;width:100%;height:100%;outline:none}
-.board-footer{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:11px 14px;color:#777b78;font-size:10px;border-top:1px solid var(--line)}
-.board-footer strong{color:#aaa083}
+.board-footer{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:11px 14px;color:#7b7e77;font-size:10px;border-top:1px solid var(--line)}
+.board-footer strong{color:#ada082}
 .side-panel{margin-bottom:13px}
 .section{padding:15px;border-bottom:1px solid var(--line)}
 .section:last-child{border-bottom:0}
-.section h2{font-size:11px;letter-spacing:1.5px;color:#858984;margin:0 0 12px;text-transform:uppercase}
-.player{display:flex;align-items:center;gap:10px;padding:10px;margin:9px 0;border:1px solid #303233;border-radius:9px;background:#202222}
+.section h2{font-size:11px;letter-spacing:1.5px;color:var(--muted);margin:0 0 12px;text-transform:uppercase}
+.player{display:flex;align-items:center;gap:10px;padding:10px;margin:9px 0;border:1px solid #323431;border-radius:9px;background:#202220}
 .player.active{border-color:#756443;background:#25251f}
-.piece-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:#303231;font-size:23px}
-.gold-icon{color:#ad9663}
-.black-icon{color:#777b78}
-.player-name{font-size:12px;font-weight:bold}
-.player-detail{font-size:10px;color:#838681;margin-top:4px}
-label{display:block;font-size:11px;color:#858984;margin-bottom:7px}
-select{width:100%;padding:10px;background:#151717;color:#c9c9c3;border:1px solid #393b39;border-radius:7px}
+.piece-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:#30322f;font-size:23px}
+.gold-icon{color:#ad9665}.black-icon{color:#858680}
+.player-name{font-size:12px;font-weight:bold}.player-detail{font-size:10px;color:var(--muted);margin-top:4px}
+label{display:block;font-size:11px;color:var(--muted);margin-bottom:7px}
+select{width:100%;padding:10px;background:#161817;color:#cccac2;border:1px solid #3b3d39;border-radius:7px}
 .button-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-button{border:1px solid #3b3d3b;border-radius:7px;padding:10px 8px;background:#272928;color:#c9c9c3;font-size:11px;cursor:pointer;transition:background .2s,border-color .2s}
-button:hover{background:#323431;border-color:#777052}
-button.primary{background:#786746;border-color:#887651;color:#f0e9d9;font-weight:bold}
+button{border:1px solid #3b3d39;border-radius:7px;padding:10px 8px;background:#282a27;color:#d0cec5;font-size:11px;cursor:pointer}
+button:hover{background:#343630;border-color:#777052}
+button.primary{background:#766746;border-color:#887651;color:#f0e9d9;font-weight:bold}
 button:disabled{opacity:.4;cursor:not-allowed}
 .history{max-height:230px;overflow:auto;font-size:11px}
-.history-empty,.hint{color:#7f837e;font-size:10px;line-height:1.8}
+.history-empty,.hint{color:#85877f;font-size:10px;line-height:1.8}
 .move-row{display:grid;grid-template-columns:30px 1fr 1fr;gap:5px;padding:8px 6px}
 .move-row:nth-child(odd){background:#ffffff05}
-.move-number{color:#737772}
-.move-white{color:#b6a174}
-.move-black{color:#b4b7b0}
-.footer{text-align:center;padding:20px 0 5px;color:#5f635f;font-size:9px;letter-spacing:2px}
-#toast{
- position:fixed;z-index:10;bottom:20px;left:50%;transform:translate(-50%,12px);
- opacity:0;pointer-events:none;background:#252725;border:1px solid #62563b;
- border-radius:8px;padding:11px 15px;color:#c3ad7c;font-size:11px;
- transition:.2s;max-width:90vw;text-align:center
-}
+.move-number{color:#73766f}.move-white{color:#b6a174}.move-black{color:#b6b8b0}
+.footer{text-align:center;padding:20px 0 5px;color:#62655e;font-size:9px;letter-spacing:2px}
+#toast{position:fixed;z-index:10;bottom:20px;left:50%;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:#262824;border:1px solid #62563b;border-radius:8px;padding:11px 15px;color:#c3ad7c;font-size:11px;transition:.2s;max-width:90vw;text-align:center}
 #toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:850px){.layout{grid-template-columns:1fr}.side-layout{display:grid;grid-template-columns:1fr 1fr;gap:12px}.side-panel{margin:0}}
-@media(max-width:540px){.app{padding:9px}.tag{display:none}.side-layout{grid-template-columns:1fr}#chessScene{min-height:280px}.panel-head{padding:11px}h1{font-size:20px}}
+@media(max-width:540px){.app{padding:9px}.tag{display:none}.side-layout{grid-template-columns:1fr}#chessScene{min-height:280px}.panel-head{padding:11px}}
 </style>
 </head>
-
 <body>
 <div class="app">
-  <header>
-    <div class="brand">
-      <div class="logo">N</div>
-      <div>
-        <h1>NUGREEN CHESS</h1>
-        <div class="subtitle">ROYAL 3D STRATEGY</div>
-      </div>
+<header>
+  <div class="brand">
+    <div class="logo">N</div>
+    <div><h1>NUGREEN CHESS</h1><div class="subtitle">ROYAL 3D STRATEGY</div></div>
+  </div>
+  <div class="tag">ROYAL EDITION</div>
+</header>
+
+<main class="layout">
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-title"><span class="dot"></span>PAPAN CATUR 3D</div>
+    <div id="status">Memuat permainan...</div>
+  </div>
+  <div id="chessScene"></div>
+  <div class="board-footer">
+    <span>Pemain: <strong>EMAS</strong></span>
+    <span>Komputer: <strong>HITAM</strong></span>
+    <span>Seret untuk memutar kamera</span>
+  </div>
+</section>
+
+<aside class="side-layout">
+<section class="panel side-panel">
+  <div class="section">
+    <h2>Pasukan kerajaan</h2>
+    <div class="player active" id="whitePlayer"><div class="piece-icon gold-icon">♔</div><div><div class="player-name">Pemain</div><div class="player-detail">Pasukan emas · Putih</div></div></div>
+    <div class="player" id="blackPlayer"><div class="piece-icon black-icon">♚</div><div><div class="player-name">Komputer AI</div><div class="player-detail" id="aiDetail">Level Menengah</div></div></div>
+  </div>
+  <div class="section">
+    <h2>Tingkat kesulitan</h2>
+    <label for="difficulty">Kemampuan komputer</label>
+    <select id="difficulty"><option value="1">Pemula</option><option value="2" selected>Menengah</option><option value="3">Sulit</option></select>
+    <div class="hint" style="margin-top:9px">Pilih tingkat analisis komputer sebelum atau saat bermain.</div>
+  </div>
+  <div class="section">
+    <h2>Kontrol permainan</h2>
+    <div class="button-grid">
+      <button class="primary" id="newGame">＋ Permainan Baru</button>
+      <button id="undoBtn">↶ Urungkan</button>
+      <button id="resetCamera">◎ Reset Kamera</button>
+      <button id="clearSelection">× Batal Pilih</button>
     </div>
-    <div class="tag">ROYAL EDITION</div>
-  </header>
+  </div>
+</section>
 
-  <main class="layout">
-    <section class="panel">
-      <div class="panel-head">
-        <div class="panel-title"><span class="dot"></span>PAPAN CATUR 3D</div>
-        <div id="status">Memuat permainan...</div>
-      </div>
-      <div id="chessScene"></div>
-      <div class="board-footer">
-        <span>Pemain: <strong>EMAS</strong></span>
-        <span>Komputer: <strong>HITAM</strong></span>
-        <span>Seret untuk memutar kamera</span>
-      </div>
-    </section>
-
-    <aside class="side-layout">
-      <section class="panel side-panel">
-        <div class="section">
-          <h2>Pasukan kerajaan</h2>
-          <div class="player active" id="whitePlayer">
-            <div class="piece-icon gold-icon">♔</div>
-            <div><div class="player-name">Pemain</div><div class="player-detail">Pasukan emas · Putih</div></div>
-          </div>
-          <div class="player" id="blackPlayer">
-            <div class="piece-icon black-icon">♚</div>
-            <div><div class="player-name">Komputer AI</div><div class="player-detail" id="aiDetail">Level Menengah</div></div>
-          </div>
-        </div>
-
-        <div class="section">
-          <h2>Tingkat kesulitan</h2>
-          <label for="difficulty">Kemampuan komputer</label>
-          <select id="difficulty">
-            <option value="1">Pemula</option>
-            <option value="2" selected>Menengah</option>
-            <option value="3">Sulit</option>
-          </select>
-          <div class="hint" style="margin-top:9px">AI menganalisis langkah dan nilai bidak sesuai tingkat yang dipilih.</div>
-        </div>
-
-        <div class="section">
-          <h2>Kontrol permainan</h2>
-          <div class="button-grid">
-            <button class="primary" id="newGame">＋ Permainan Baru</button>
-            <button id="undoBtn">↶ Urungkan</button>
-            <button id="resetCamera">◎ Reset Kamera</button>
-            <button id="clearSelection">× Batal Pilih</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel side-panel">
-        <div class="section">
-          <h2>Riwayat langkah</h2>
-          <div id="history" class="history"><div class="history-empty">Pilih bidak emas untuk memulai.</div></div>
-        </div>
-        <div class="section">
-          <h2>Cara bermain</h2>
-          <div class="hint">
-            1. Klik bidak emas.<br>
-            2. Pilih kotak tujuan yang disorot.<br>
-            3. Bidak akan melompat ke kotak tujuan.<br>
-            4. Bidak yang dimakan pecah menjadi partikel.<br>
-            5. Seret papan untuk mengubah sudut pandang.
-          </div>
-        </div>
-      </section>
-    </aside>
-  </main>
-  <div class="footer">NUGREEN · THINK SMART · PLAY STRATEGIC</div>
+<section class="panel side-panel">
+  <div class="section"><h2>Riwayat langkah</h2><div id="history" class="history"><div class="history-empty">Pilih bidak emas untuk memulai.</div></div></div>
+  <div class="section"><h2>Cara bermain</h2><div class="hint">
+    1. Klik bidak emas.<br>
+    2. Klik kotak tujuan yang disorot.<br>
+    3. Bidak melompat dan mendarat tepat di kotak tujuan.<br>
+    4. Bidak yang dimakan pecah menjadi partikel.<br>
+    5. Seret papan untuk memutar kamera.
+  </div></div>
+</section>
+</aside>
+</main>
+<div class="footer">NUGREEN · THINK SMART · PLAY STRATEGIC</div>
 </div>
 <div id="toast"></div>
 
@@ -174,467 +128,395 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 let scene,camera,renderer,controls,game,boardGroup,pieceGroup;
 let selectedSquare=null,legalTargets=[],hoveredPiece=null;
-let busy=false,aiThinking=false,searchToken=0,previousFrameTime=0;
-let toastTimer=null,moveAnimations=[];
-const captureEffects=[];
-const squareMeshes={};
-const raycaster=new THREE.Raycaster();
+let aiThinking=false,busy=false,searchToken=0,lastFrame=0,toastTimer=null;
+const animations=[],captureEffects=[],squareMeshes={},raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
-const files='abcdefgh';
-const BOARD_Y=.30;
+const files='abcdefgh',BOARD_Y=.30;
+const values={p:100,n:320,b:330,r:500,q:900,k:20000};
 
-const goldMaterial=new THREE.MeshStandardMaterial({
-  color:0x8d784d,metalness:.25,roughness:.65
-});
-const goldLightMaterial=new THREE.MeshStandardMaterial({
-  color:0xa18c60,metalness:.22,roughness:.62
-});
-const darkMaterial=new THREE.MeshStandardMaterial({
-  color:0x292c2c,metalness:.18,roughness:.68
-});
-const darkAccent=new THREE.MeshStandardMaterial({
-  color:0x454744,metalness:.18,roughness:.62
-});
-const tileLight=new THREE.MeshStandardMaterial({color:0x858681,roughness:.88});
-const tileDark=new THREE.MeshStandardMaterial({color:0x383a39,roughness:.88});
-const frameMaterial=new THREE.MeshStandardMaterial({color:0x5a4b31,metalness:.2,roughness:.7});
-const selectedMaterial=new THREE.MeshBasicMaterial({color:0x778c69,transparent:true,opacity:.35,depthWrite:false});
-const targetMaterial=new THREE.MeshBasicMaterial({color:0xa28b59,transparent:true,opacity:.36,depthWrite:false});
-const pieceValue={p:100,n:320,b:330,r:500,q:900,k:20000};
+const gold= new THREE.MeshStandardMaterial({color:0x94805a,metalness:.16,roughness:.72});
+const goldTrim=new THREE.MeshStandardMaterial({color:0xb09b70,metalness:.20,roughness:.67});
+const dark=new THREE.MeshStandardMaterial({color:0x292c2a,metalness:.12,roughness:.75});
+const darkTrim=new THREE.MeshStandardMaterial({color:0x50534e,metalness:.14,roughness:.72});
+const tileLight=new THREE.MeshStandardMaterial({color:0x858680,roughness:.9});
+const tileDark=new THREE.MeshStandardMaterial({color:0x393b39,roughness:.9});
+const frameMat=new THREE.MeshStandardMaterial({color:0x5a4c33,metalness:.12,roughness:.8});
+const selectedMat=new THREE.MeshBasicMaterial({color:0x74866c,transparent:true,opacity:.36,depthWrite:false});
+const targetMat=new THREE.MeshBasicMaterial({color:0xa18c5c,transparent:true,opacity:.36,depthWrite:false});
 
-function mat(color,metalness=.1,roughness=.7){
-  return new THREE.MeshStandardMaterial({color,metalness,roughness});
+function material(color,metalness=.1,roughness=.75){return new THREE.MeshStandardMaterial({color,metalness,roughness});}
+function box(parent,w,h,d,x,y,z,m){
+  const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);
+  o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;parent.add(o);return o;
 }
-function box(parent,w,h,d,x,y,z,material){
-  const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);
-  mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;
-  parent.add(mesh);return mesh;
+function cylinder(parent,rt,rb,h,y,m,n=16){
+  const o=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,n),m);
+  o.position.y=y;o.castShadow=true;o.receiveShadow=true;parent.add(o);return o;
 }
-function cylinder(parent,rt,rb,h,y,material,segments=18){
-  const mesh=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,segments),material);
-  mesh.position.y=y;mesh.castShadow=true;mesh.receiveShadow=true;
-  parent.add(mesh);return mesh;
+function sphere(parent,r,x,y,z,m,sx=1,sy=1,sz=1){
+  const o=new THREE.Mesh(new THREE.SphereGeometry(r,14,10),m);
+  o.position.set(x,y,z);o.scale.set(sx,sy,sz);o.castShadow=true;parent.add(o);return o;
 }
-function sphere(parent,r,x,y,z,material,sy=1){
-  const mesh=new THREE.Mesh(new THREE.SphereGeometry(r,14,10),material);
-  mesh.position.set(x,y,z);mesh.scale.y=sy;mesh.castShadow=true;
-  parent.add(mesh);return mesh;
+function cone(parent,r,h,x,y,z,m,n=8){
+  const o=new THREE.Mesh(new THREE.ConeGeometry(r,h,n),m);
+  o.position.set(x,y,z);o.castShadow=true;parent.add(o);return o;
 }
-function cone(parent,r,h,x,y,z,material,segments=8){
-  const mesh=new THREE.Mesh(new THREE.ConeGeometry(r,h,segments),material);
-  mesh.position.set(x,y,z);mesh.castShadow=true;parent.add(mesh);return mesh;
+function lineBetween(parent,a,b,r,m){
+  const va=new THREE.Vector3(...a),vb=new THREE.Vector3(...b),d=vb.clone().sub(va);
+  const o=new THREE.Mesh(new THREE.CylinderGeometry(r,r,d.length(),8),m);
+  o.position.copy(va.clone().add(vb).multiplyScalar(.5));
+  o.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());
+  o.castShadow=true;parent.add(o);return o;
 }
-function squarePos(square){
-  return {x:files.indexOf(square[0])-3.5,z:Number(square[1])-4.5};
+function posOf(s){return{x:files.indexOf(s[0])-3.5,z:Number(s[1])-4.5};}
+
+/* Bentuk anatomi sederhana seperti patung manusia:
+   kepala, leher, torso, bahu, lengan, kaki dan perlengkapan sesuai peran. */
+function humanBody(g,m,t){
+  // torso, pinggang, bahu
+  cylinder(g,.115,.16,.25,.39,m,12);
+  sphere(g,.16,0,.51,0,m,1.35,.65,.85);
+  cylinder(g,.105,.12,.10,.55,m,12);
+  // kepala dan leher
+  cylinder(g,.045,.055,.09,.59,m,10);
+  sphere(g,.09,0,.70,0,m,.9,1.08,.9);
+  // hidung, helm muka, dan mata sebagai detail patung
+  sphere(g,.022,0,.705,-.082,m,.75,.7,.65);
+  // kaki terpisah dan sepatu
+  lineBetween(g,[-.055,.31,0],[-.075,.10,-.015],.037,m);
+  lineBetween(g,[.055,.31,0],[.075,.10,-.015],.037,m);
+  sphere(g,.045,-.075,.075,-.035,m,1.2,.55,1.4);
+  sphere(g,.045,.075,.075,-.035,m,1.2,.55,1.4);
+  // lengan miring ke depan
+  lineBetween(g,[-.12,.50,0],[-.18,.35,-.065],.035,m);
+  lineBetween(g,[.12,.50,0],[.18,.38,-.065],.035,m);
+  sphere(g,.037,-.18,.35,-.065,m);
+  sphere(g,.037,.18,.38,-.065,m);
+  // lapisan pelindung dada
+  const chest=box(g,.19,.19,.035,0,.43,-.082,t);
+  chest.rotation.x=-.12;
+  // sabuk
+  box(g,.22,.035,.15,0,.32,0,t);
+}
+
+function addShield(g,m){
+  const s=box(g,.16,.22,.045,-.20,.43,-.065,m);
+  s.rotation.z=-.08;
+  cone(g,.035,.06,-.20,.29,-.065,m,5);
+}
+function addSword(g,m,x=.20){
+  lineBetween(g,[x,.39,-.06],[x,.73,-.06],.018,m);
+  box(g,.09,.025,.035,x,.43,-.06,m);
+  sphere(g,.025,x,.36,-.06,m);
+}
+function addSpear(g,m,x=.23){
+  lineBetween(g,[x,.28,-.04],[x,1.02,-.04],.012,m);
+  cone(g,.045,.13,x,1.07,-.04,m,5);
+}
+function addCape(g,m){
+  const cape= new THREE.Mesh(new THREE.ConeGeometry(.21,.40,4),m);
+  cape.position.set(0,.37,.13);cape.rotation.x=Math.PI;
+  cape.scale.set(1,.85,.65);cape.castShadow=true;g.add(cape);
 }
 function createPiece(type,color,square){
-  const group=new THREE.Group();
-  const main=color==='w'?goldMaterial:darkMaterial;
-  const trim=color==='w'?goldLightMaterial:darkAccent;
+  const g=new THREE.Group(),m=color==='w'?gold:dark,t=color==='w'?goldTrim:darkTrim;
 
-  // Semua bidak memiliki alas seragam bergaya miniatur tentara.
-  cylinder(group,.29,.34,.10,.055,trim);
-  cylinder(group,.25,.29,.09,.145,main);
-  cylinder(group,.20,.24,.045,.21,trim);
+  // Alas patung berlapis.
+  cylinder(g,.28,.33,.09,.055,t);
+  cylinder(g,.24,.28,.08,.135,m);
+  cylinder(g,.19,.22,.04,.195,t);
 
   if(type==='p'){
-    // Prajurit infanteri: tubuh, bahu, helm, dan tombak.
-    cylinder(group,.105,.15,.22,.34,main);
-    sphere(group,.145,0,.50,0,main,.9);
-    cylinder(group,.155,.155,.045,.57,trim);
-    cone(group,.14,.18,0,.68,0,main,8);
-    box(group,.045,.26,.045,.20,.45,0,trim);
-    cone(group,.045,.10,.20,.63,0,trim,6);
-    sphere(group,.035,.20,.54,.035,trim);
+    humanBody(g,m,t);
+    // helm prajurit
+    sphere(g,.097,0,.735,0,t,.98,.55,.98);
+    cone(g,.05,.12,0,.83,0,m,6);
+    addSpear(g,t,.23);
+    addShield(g,t);
   }
-
-  if(type==='r'){
-    // Benteng: menara pertahanan dengan puncak bergerigi.
-    cylinder(group,.17,.20,.10,.29,main);
-    cylinder(group,.145,.16,.37,.52,main,12);
-    cylinder(group,.21,.17,.08,.75,trim,12);
-    cylinder(group,.205,.205,.07,.82,main,12);
-    for(let i=0;i<6;i++){
-      const a=i*Math.PI/3;
-      box(group,.085,.12,.085,Math.cos(a)*.145,.91,Math.sin(a)*.145,trim);
-    }
-  }
-
   if(type==='n'){
-    // Kuda: kesatria dengan helm dan pelindung muka.
-    cylinder(group,.14,.18,.10,.29,main);
-    box(group,.22,.28,.20,0,.45,0,main);
-    box(group,.24,.25,.20,0,.67,-.015,main);
-    box(group,.20,.11,.23,0,.59,-.08,trim);
-    cone(group,.07,.17,-.055,.87,0,main,5);
-    cone(group,.06,.15,.07,.85,0,main,5);
-    sphere(group,.027,.12,.68,-.11,trim);
-    box(group,.065,.23,.08,.18,.52,0,trim);
+    humanBody(g,m,t);
+    // helm kesatria dan pelindung muka
+    sphere(g,.10,0,.72,0,t,1,.72,1);
+    cone(g,.065,.16,0,.84,.005,m,5);
+    box(g,.13,.04,.03,0,.70,-.085,t);
+    addSword(g,t,.23);addShield(g,m);
   }
-
+  if(type==='r'){
+    humanBody(g,m,t);
+    // zirah penjaga dan helm
+    addCape(g,m);
+    sphere(g,.10,0,.72,0,t,1,.65,1);
+    cylinder(g,.13,.12,.055,.78,t,8);
+    for(let i=0;i<4;i++)box(g,.055,.075,.055,(i-1.5)*.075,.83,0,m);
+    addSpear(g,t,.23);addShield(g,t);
+  }
   if(type==='b'){
-    // Gajah/komandan: jubah, pelindung bahu, dan helm runcing.
-    cylinder(group,.14,.19,.10,.29,main);
-    cylinder(group,.105,.15,.31,.49,main,12);
-    sphere(group,.17,0,.69,0,main,.9);
-    cylinder(group,.18,.18,.045,.78,trim);
-    cone(group,.105,.22,0,.90,0,main,8);
-    sphere(group,.045,0,.80,0,trim);
-    box(group,.045,.20,.045,.15,.50,0,trim);
+    humanBody(g,m,t);addCape(g,t);
+    // hiasan helm komandan
+    sphere(g,.10,0,.72,0,t,1,.65,1);
+    cone(g,.07,.19,0,.86,0,m,8);
+    box(g,.035,.20,.035,.23,.48,0,t);
+    sphere(g,.04,.23,.60,0,t);
+    addShield(g,t);
   }
-
   if(type==='q'){
-    // Panglima: jubah lebar, bahu, mahkota kecil, dan tongkat komando.
-    cylinder(group,.16,.21,.12,.29,main);
-    cylinder(group,.12,.17,.32,.50,main,12);
-    sphere(group,.16,0,.72,0,main,.9);
-    cylinder(group,.21,.15,.07,.81,trim);
+    humanBody(g,m,t);addCape(g,t);
+    // mahkota panglima
+    cylinder(g,.12,.10,.045,.77,t,10);
     for(let i=0;i<5;i++){
       const a=i*Math.PI*2/5;
-      cone(group,.045,.12,Math.cos(a)*.16,.90,Math.sin(a)*.16,trim,5);
+      cone(g,.035,.10,Math.cos(a)*.085,.84,Math.sin(a)*.085,t,5);
     }
-    sphere(group,.045,0,.94,0,trim);
-    box(group,.035,.36,.035,.24,.56,0,trim);
-    sphere(group,.055,.24,.77,0,trim);
+    sphere(g,.035,0,.89,0,t);
+    // tongkat komando
+    lineBetween(g,[.23,.30,-.04],[.23,.89,-.04],.014,t);
+    sphere(g,.045,.23,.91,-.04,t);
   }
-
   if(type==='k'){
-    // Raja: tubuh tinggi, mantel, bahu, mahkota, dan salib.
-    cylinder(group,.17,.22,.12,.29,main);
-    cylinder(group,.13,.17,.34,.51,main,12);
-    sphere(group,.17,0,.73,0,main,.9);
-    cylinder(group,.22,.16,.07,.82,trim);
-    cylinder(group,.13,.13,.08,.89,main);
-    box(group,.065,.25,.065,0,1.04,0,trim);
-    box(group,.20,.055,.06,0,1.07,0,trim);
-    for(let i=0;i<3;i++){
-      cone(group,.04,.11,(i-1)*.11,.96,0,trim,5);
+    humanBody(g,m,t);addCape(g,m);
+    // mahkota kerajaan dan salib
+    cylinder(g,.13,.105,.05,.77,t,10);
+    for(let i=0;i<5;i++){
+      const a=i*Math.PI*2/5;
+      cone(g,.035,.12,Math.cos(a)*.09,.86,Math.sin(a)*.09,t,5);
     }
+    sphere(g,.035,0,.92,0,t);
+    box(g,.045,.22,.045,0,.99,0,t);
+    box(g,.17,.045,.045,0,1.015,0,t);
+    // tongkat kerajaan kecil
+    lineBetween(g,[-.23,.32,-.03],[-.23,.85,-.03],.015,t);
+    sphere(g,.045,-.23,.88,-.03,t);
   }
 
-  const p=squarePos(square);
-  group.position.set(p.x,BOARD_Y,p.z);
-  group.userData={square,color,type,baseY:BOARD_Y,phase:Math.random()*6.28};
-  pieceGroup.add(group);
-  return group;
+  const p=posOf(square);
+  g.position.set(p.x,BOARD_Y,p.z);
+  g.userData={square,color,type,phase:Math.random()*6.28};
+  pieceGroup.add(g);return g;
 }
 
 function createBoard(){
   boardGroup=new THREE.Group();scene.add(boardGroup);
-
-  const base=new THREE.Mesh(new THREE.BoxGeometry(8.45,.27,8.45),mat(0x242625,.05,.85));
+  const base=new THREE.Mesh(new THREE.BoxGeometry(8.45,.27,8.45),material(0x252725,.02,.85));
   base.position.y=.02;base.receiveShadow=true;boardGroup.add(base);
-
-  const frame=new THREE.Mesh(new THREE.BoxGeometry(8.27,.09,8.27),frameMaterial);
+  const frame=new THREE.Mesh(new THREE.BoxGeometry(8.27,.09,8.27),frameMat);
   frame.position.y=.18;boardGroup.add(frame);
-
-  const inset=new THREE.Mesh(new THREE.BoxGeometry(8.10,.06,8.10),mat(0x303230,.05,.8));
+  const inset=new THREE.Mesh(new THREE.BoxGeometry(8.1,.06,8.1),material(0x30322f,.02,.85));
   inset.position.y=.235;boardGroup.add(inset);
 
-  for(let rank=1;rank<=8;rank++){
-    for(let file=0;file<8;file++){
-      const sq=files[file]+rank;
-      const tile=new THREE.Mesh(
-        new THREE.BoxGeometry(.99,.055,.99),
-        (file+rank)%2===0?tileLight:tileDark
-      );
-      tile.position.set(file-3.5,.29,rank-4.5);
-      tile.userData={square:sq,baseMaterial:tile.material};
-      tile.receiveShadow=true;boardGroup.add(tile);squareMeshes[sq]=tile;
-    }
+  for(let r=1;r<=8;r++)for(let c=0;c<8;c++){
+    const sq=files[c]+r;
+    const tile=new THREE.Mesh(new THREE.BoxGeometry(.99,.055,.99),(c+r)%2===0?tileLight:tileDark);
+    tile.position.set(c-3.5,.29,r-4.5);
+    tile.userData={square:sq,baseMaterial:tile.material};
+    tile.receiveShadow=true;boardGroup.add(tile);squareMeshes[sq]=tile;
   }
-
-  // NUGREEN plaque sits on the front frame, away from the playing squares.
-  const canvas=document.createElement('canvas');
-  canvas.width=512;canvas.height=96;
-  const ctx=canvas.getContext('2d');
-  ctx.fillStyle='#262724';ctx.fillRect(0,0,512,96);
-  ctx.strokeStyle='#716044';ctx.lineWidth=3;ctx.strokeRect(3,3,506,90);
-  ctx.fillStyle='#a99a76';ctx.font='bold 43px Arial';
-  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('NUGREEN',256,49);
-  const plaque=new THREE.Mesh(
-    new THREE.PlaneGeometry(2.0,.36),
-    new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(canvas)})
-  );
+  const cv=document.createElement('canvas');cv.width=512;cv.height=90;
+  const ctx=cv.getContext('2d');ctx.fillStyle='#272925';ctx.fillRect(0,0,512,90);
+  ctx.strokeStyle='#756344';ctx.lineWidth=3;ctx.strokeRect(3,3,506,84);
+  ctx.fillStyle='#aa9a75';ctx.font='bold 42px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('NUGREEN',256,46);
+  const plaque=new THREE.Mesh(new THREE.PlaneGeometry(2,.34),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cv)}));
   plaque.rotation.x=-Math.PI/2;plaque.position.set(0,.229,4.14);boardGroup.add(plaque);
-}
-
-function disposePieceGroup(group){
-  group.traverse(obj=>{
-    if(obj.geometry)obj.geometry.dispose();
-  });
 }
 function clearPieces(){
   while(pieceGroup.children.length){
-    const obj=pieceGroup.children[0];
-    pieceGroup.remove(obj);disposePieceGroup(obj);
+    const p=pieceGroup.children[0];pieceGroup.remove(p);
+    p.traverse(o=>{if(o.geometry)o.geometry.dispose();});
   }
 }
 function renderPieces(){
-  clearPieces();
-  const board=game.board();
-  for(let row=0;row<8;row++){
-    for(let col=0;col<8;col++){
-      const piece=board[row][col];
-      if(piece)createPiece(piece.type,piece.color,files[col]+(8-row));
-    }
+  clearPieces();const b=game.board();
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+    if(b[r][c])createPiece(b[r][c].type,b[r][c].color,files[c]+(8-r));
   }
   updateHighlights();
 }
 function updateHighlights(){
-  Object.keys(squareMeshes).forEach(sq=>{
-    const tile=squareMeshes[sq];
-    tile.material=tile.userData.baseMaterial;tile.position.y=.29;
-  });
+  for(const sq in squareMeshes){
+    squareMeshes[sq].material=squareMeshes[sq].userData.baseMaterial;
+    squareMeshes[sq].position.y=.29;
+  }
   if(selectedSquare&&squareMeshes[selectedSquare]){
-    squareMeshes[selectedSquare].material=selectedMaterial;
-    squareMeshes[selectedSquare].position.y=.325;
+    squareMeshes[selectedSquare].material=selectedMat;squareMeshes[selectedSquare].position.y=.325;
   }
   legalTargets.forEach(sq=>{
-    if(squareMeshes[sq]){
-      squareMeshes[sq].material=targetMaterial;
-      squareMeshes[sq].position.y=.32;
-    }
+    if(squareMeshes[sq]){squareMeshes[sq].material=targetMat;squareMeshes[sq].position.y=.32;}
   });
   if(game&&game.in_check()){
     const sq=findKingSquare(game.turn());
     if(sq&&squareMeshes[sq]){
-      squareMeshes[sq].material=new THREE.MeshBasicMaterial({
-        color:0x8c5751,transparent:true,opacity:.4
-      });
+      squareMeshes[sq].material=new THREE.MeshBasicMaterial({color:0x81544e,transparent:true,opacity:.45});
     }
   }
 }
 function findKingSquare(color){
   const b=game.board();
-  for(let r=0;r<8;r++)for(let c=0;c<8;c++){
-    if(b[r][c]&&b[r][c].type==='k'&&b[r][c].color===color)
-      return files[c]+(8-r);
-  }
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++)
+    if(b[r][c]&&b[r][c].type==='k'&&b[r][c].color===color)return files[c]+(8-r);
   return null;
 }
 
 function setupScene(){
-  const container=document.getElementById('chessScene');
-  scene=new THREE.Scene();scene.background=new THREE.Color(0x181a19);
-  camera=new THREE.PerspectiveCamera(38,container.clientWidth/container.clientHeight,.1,100);
+  const el=document.getElementById('chessScene');
+  scene=new THREE.Scene();scene.background=new THREE.Color(0x191b1a);
+  camera=new THREE.PerspectiveCamera(38,el.clientWidth/el.clientHeight,.1,100);
   camera.position.set(7.8,9.8,10.5);
-
-  renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
-  renderer.setSize(container.clientWidth,container.clientHeight);
-  renderer.shadowMap.enabled=true;
-  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer=new THREE.WebGLRenderer({antialias:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
+  renderer.setSize(el.clientWidth,el.clientHeight);
+  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   renderer.outputEncoding=THREE.sRGBEncoding;
-  renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=.72;
-  container.appendChild(renderer.domElement);
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.72;
+  el.appendChild(renderer.domElement);
 
   controls=new THREE.OrbitControls(camera,renderer.domElement);
-  controls.target.set(0,.25,0);
-  controls.enableDamping=true;controls.dampingFactor=.07;
-  controls.minDistance=7;controls.maxDistance=17;
-  controls.maxPolarAngle=Math.PI/2.03;
+  controls.target.set(0,.25,0);controls.enableDamping=true;controls.dampingFactor=.07;
+  controls.minDistance=7;controls.maxDistance=17;controls.maxPolarAngle=Math.PI/2.03;
 
-  // Low-intensity lighting reduces glare and shiny reflections.
   scene.add(new THREE.AmbientLight(0xffffff,.48));
   const key=new THREE.DirectionalLight(0xffefd5,.85);
-  key.position.set(-4,10,5);key.castShadow=true;
-  key.shadow.mapSize.set(768,768);
-  key.shadow.camera.left=-8;key.shadow.camera.right=8;
-  key.shadow.camera.top=8;key.shadow.camera.bottom=-8;
+  key.position.set(-4,10,5);key.castShadow=true;key.shadow.mapSize.set(768,768);
+  key.shadow.camera.left=-8;key.shadow.camera.right=8;key.shadow.camera.top=8;key.shadow.camera.bottom=-8;
   scene.add(key);
-  const rim=new THREE.PointLight(0xb29b6b,10,18);
-  rim.position.set(4,5,-5);scene.add(rim);
+  const rim=new THREE.PointLight(0xb29b6b,10,18);rim.position.set(4,5,-5);scene.add(rim);
+  const floor=new THREE.Mesh(new THREE.PlaneGeometry(100,100),material(0x171918,.02,.9));
+  floor.rotation.x=-Math.PI/2;floor.position.y=-.15;floor.receiveShadow=true;scene.add(floor);
 
-  const floor=new THREE.Mesh(
-    new THREE.PlaneGeometry(100,100),mat(0x171918,.02,.9)
-  );
-  floor.rotation.x=-Math.PI/2;floor.position.y=-.15;
-  floor.receiveShadow=true;scene.add(floor);
-
-  pieceGroup=new THREE.Group();scene.add(pieceGroup);
-  createBoard();
-
+  pieceGroup=new THREE.Group();scene.add(pieceGroup);createBoard();
   renderer.domElement.addEventListener('pointerdown',onBoardClick);
   renderer.domElement.addEventListener('pointermove',onPieceHover);
   renderer.domElement.addEventListener('pointerleave',()=>{hoveredPiece=null;});
   window.addEventListener('resize',onResize);
 }
 function onResize(){
-  if(!renderer||!camera)return;
+  if(!renderer)return;
   const el=document.getElementById('chessScene');
-  camera.aspect=el.clientWidth/el.clientHeight;
-  camera.updateProjectionMatrix();
+  camera.aspect=el.clientWidth/el.clientHeight;camera.updateProjectionMatrix();
   renderer.setSize(el.clientWidth,el.clientHeight);
 }
-
-function setRay(event){
-  const rect=renderer.domElement.getBoundingClientRect();
-  pointer.x=((event.clientX-rect.left)/rect.width)*2-1;
-  pointer.y=-((event.clientY-rect.top)/rect.height)*2+1;
+function setRay(e){
+  const r=renderer.domElement.getBoundingClientRect();
+  pointer.x=((e.clientX-r.left)/r.width)*2-1;
+  pointer.y=-((e.clientY-r.top)/r.height)*2+1;
   raycaster.setFromCamera(pointer,camera);
 }
-function findSquareAt(event){
-  setRay(event);
+function findSquareAt(e){
+  setRay(e);
   const hits=raycaster.intersectObjects([...pieceGroup.children,...boardGroup.children],true);
   for(const hit of hits){
-    let obj=hit.object;
-    while(obj){
-      if(obj.userData&&obj.userData.square)return obj.userData.square;
-      obj=obj.parent;
-    }
+    let o=hit.object;
+    while(o){if(o.userData&&o.userData.square)return o.userData.square;o=o.parent;}
   }
   return null;
 }
-function onPieceHover(event){
+function onPieceHover(e){
   if(!renderer||busy||aiThinking)return;
-  setRay(event);
-  const hits=raycaster.intersectObjects(pieceGroup.children,true);
+  setRay(e);const hits=raycaster.intersectObjects(pieceGroup.children,true);
   let found=null;
   for(const hit of hits){
-    let obj=hit.object;
-    while(obj&&obj.parent!==pieceGroup)obj=obj.parent;
-    if(obj&&obj.parent===pieceGroup&&obj.userData.square){
-      if(obj.userData.color==='w')found=obj;
-      break;
+    let o=hit.object;
+    while(o&&o.parent!==pieceGroup)o=o.parent;
+    if(o&&o.parent===pieceGroup&&o.userData.square){
+      if(o.userData.color==='w')found=o;break;
     }
   }
-  hoveredPiece=found;
-  renderer.domElement.style.cursor=found?'pointer':'default';
+  hoveredPiece=found;renderer.domElement.style.cursor=found?'pointer':'default';
 }
-
-function onBoardClick(event){
+function onBoardClick(e){
   if(busy||aiThinking||game.game_over())return;
-  const sq=findSquareAt(event);
-  if(!sq)return;
-  const piece=game.get(sq);
-
-  if(!selectedSquare){
-    if(piece&&piece.color==='w')selectSquare(sq);
-    return;
-  }
+  const sq=findSquareAt(e);if(!sq)return;
+  const p=game.get(sq);
+  if(!selectedSquare){if(p&&p.color==='w')selectSquare(sq);return;}
   if(sq===selectedSquare){clearSelection();return;}
-  if(piece&&piece.color==='w'){selectSquare(sq);return;}
-
+  if(p&&p.color==='w'){selectSquare(sq);return;}
   const legal=game.moves({square:selectedSquare,verbose:true});
   const move=legal.find(m=>m.to===sq);
   if(!move){showToast('Langkah tidak sah. Pilih kotak tujuan yang disorot.');return;}
-
   let promotion='q';
   if(move.flags.includes('p')){
-    const answer=prompt('Promosi pion: q = ratu, r = benteng, b = gajah, n = kuda.','q');
-    const v=(answer||'q').toLowerCase();
-    promotion=['q','r','b','n'].includes(v)?v:'q';
+    const answer=prompt('Promosi pion: q=ratu, r=benteng, b=gajah, n=kuda.','q');
+    const v=(answer||'q').toLowerCase();promotion=['q','r','b','n'].includes(v)?v:'q';
   }
-  performAnimatedMove({...move,promotion},'w');
+  move.promotion=promotion;animateMove(move,'w');
 }
-
 function selectSquare(sq){
-  const p=game.get(sq);
-  if(!p||p.color!=='w')return;
-  selectedSquare=sq;
-  legalTargets=game.moves({square:sq,verbose:true}).map(m=>m.to);
-  updateHighlights();
-  showToast('Bidak dipilih: '+sq.toUpperCase());
+  const p=game.get(sq);if(!p||p.color!=='w')return;
+  selectedSquare=sq;legalTargets=game.moves({square:sq,verbose:true}).map(m=>m.to);
+  updateHighlights();showToast('Bidak dipilih: '+sq.toUpperCase());
 }
-function clearSelection(){
-  selectedSquare=null;legalTargets=[];updateHighlights();
-}
+function clearSelection(){selectedSquare=null;legalTargets=[];updateHighlights();}
 
-// Animate the actual piece with a hop arc before committing the move.
-function performAnimatedMove(move,actor){
+/* Animasi selalu berakhir di koordinat pusat kotak tujuan yang sah. */
+function animateMove(move,actor){
   if(busy)return;
-  const from=move.from,to=move.to;
-  const group=pieceGroup.children.find(p=>p.userData.square===from);
-  if(!group)return;
+  const piece=pieceGroup.children.find(p=>p.userData.square===move.from);
+  if(!piece)return;
+  busy=true;hoveredPiece=null;selectedSquare=null;legalTargets=[];updateHighlights();
 
-  busy=true;hoveredPiece=null;
-  selectedSquare=null;legalTargets=[];updateHighlights();
+  const start={x:piece.position.x,y:piece.position.y,z:piece.position.z};
+  const end=posOf(move.to);
+  const duration=actor==='w'?.48:.50;
+  const begin=performance.now();
 
-  const start={x:group.position.x,y:group.position.y,z:group.position.z};
-  const end=squarePos(to);
-  const duration=actor==='b'?.48:.40;
-  const began=performance.now();
-
-  moveAnimations.push({
-    group,start,end,began,duration,actor,move,
-    onFinish:()=>{
+  animations.push({
+    piece,start,end,begin,duration,move,actor,
+    finish:()=>{
       if(move.captured){
-        spawnCaptureEffect(move.to,actor==='w'?'b':'w');
+        spawnCapture(move.to,actor==='w'?'b':'w');
       }else if(move.flags.includes('e')){
         const rank=Number(move.to[1])+(actor==='w'?-1:1);
-        spawnCaptureEffect(move.to[0]+rank,actor==='w'?'b':'w');
+        spawnCapture(move.to[0]+rank,actor==='w'?'b':'w');
       }
-
-      const committed=game.move({
-        from:move.from,to:move.to,promotion:move.promotion||'q'
-      });
-      if(!committed){
-        busy=false;renderPieces();updateUI();return;
-      }
-
-      busy=false;renderPieces();updateUI();
-      if(!game.game_over()&&actor==='w')scheduleAI();
+      const done=game.move({from:move.from,to:move.to,promotion:move.promotion||'q'});
+      busy=false;
+      if(!done){renderPieces();updateUI();return;}
+      renderPieces();updateUI();
+      if(actor==='w'&&!game.game_over())scheduleAI();
     }
   });
 }
-
-function updateMoveAnimations(){
+function updateAnimations(){
   const now=performance.now();
-  for(let i=moveAnimations.length-1;i>=0;i--){
-    const a=moveAnimations[i];
-    let t=Math.min(1,(now-a.began)/(a.duration*1000));
-    // Smooth take-off and landing with a visible hop.
+  for(let i=animations.length-1;i>=0;i--){
+    const a=animations[i],t=Math.min(1,(now-a.begin)/(a.duration*1000));
     const eased=t*t*(3-2*t);
-    const hop=Math.sin(Math.PI*t)*.82;
-    a.group.position.x=a.start.x+(a.end.x-a.start.x)*eased;
-    a.group.position.z=a.start.z+(a.end.z-a.start.z)*eased;
-    a.group.position.y=a.start.y+(a.end.y-a.start.y)*eased+hop;
-    a.group.rotation.z=Math.sin(Math.PI*t)*.08;
+    // Parabola: naik, maju ke kotak sasaran, kemudian mendarat.
+    const jumpHeight=.88;
+    a.piece.position.x=a.start.x+(a.end.x-a.start.x)*eased;
+    a.piece.position.z=a.start.z+(a.end.z-a.start.z)*eased;
+    a.piece.position.y=a.start.y+(a.end.y-a.start.y)*eased+Math.sin(Math.PI*t)*jumpHeight;
+    a.piece.rotation.z=Math.sin(Math.PI*t)*.07;
     if(t>=1){
-      a.group.position.set(a.end.x,BOARD_Y,a.end.z);
-      a.group.rotation.z=0;
-      moveAnimations.splice(i,1);
-      a.onFinish();
+      a.piece.position.set(a.end.x,BOARD_Y,a.end.z);
+      a.piece.rotation.z=0;
+      animations.splice(i,1);
+      a.finish();
     }
   }
 }
 
-// Shattering pieces: muted fragments with gravity and a short fade.
-function spawnCaptureEffect(square,color){
-  const pos=squarePos(square);
-  const particleColor=color==='w'?0xa58d58:0x60635f;
+/* Efek pecahan saat bidak tertangkap. */
+function spawnCapture(sq,color){
+  const p=posOf(sq),c=color==='w'?0xa58d58:0x666963;
   for(let i=0;i<22;i++){
-    const size=.035+Math.random()*.055;
     const mesh=new THREE.Mesh(
-      new THREE.TetrahedronGeometry(size),
-      new THREE.MeshStandardMaterial({
-        color:particleColor,metalness:.12,roughness:.72,transparent:true,opacity:.9
-      })
+      new THREE.TetrahedronGeometry(.035+Math.random()*.055),
+      new THREE.MeshStandardMaterial({color:c,metalness:.1,roughness:.75,transparent:true,opacity:.9})
     );
-    mesh.position.set(pos.x+(Math.random()-.5)*.28,BOARD_Y+.5+Math.random()*.3,
-      pos.z+(Math.random()-.5)*.28);
-    mesh.rotation.set(Math.random()*3,Math.random()*3,Math.random()*3);
-    scene.add(mesh);
-    captureEffects.push({
-      mesh,vx:(Math.random()-.5)*4,vy:1.3+Math.random()*3.0,
-      vz:(Math.random()-.5)*4,rx:Math.random()*8,ry:Math.random()*8,
-      age:0,life:.65+Math.random()*.35
-    });
+    mesh.position.set(p.x+(Math.random()-.5)*.28,BOARD_Y+.45+Math.random()*.3,p.z+(Math.random()-.5)*.28);
+    mesh.rotation.set(Math.random()*3,Math.random()*3,Math.random()*3);scene.add(mesh);
+    captureEffects.push({mesh,vx:(Math.random()-.5)*4,vy:1.3+Math.random()*3,vz:(Math.random()-.5)*4,
+      rx:Math.random()*8,ry:Math.random()*8,age:0,life:.65+Math.random()*.35});
   }
 }
 function updateCaptureEffects(dt){
   for(let i=captureEffects.length-1;i>=0;i--){
     const p=captureEffects[i];p.age+=dt;
-    p.mesh.position.x+=p.vx*dt;
-    p.mesh.position.y+=p.vy*dt;
-    p.mesh.position.z+=p.vz*dt;
+    p.mesh.position.x+=p.vx*dt;p.mesh.position.y+=p.vy*dt;p.mesh.position.z+=p.vz*dt;
     p.vy-=7*dt;p.mesh.rotation.x+=p.rx*dt;p.mesh.rotation.y+=p.ry*dt;
     p.mesh.material.opacity=Math.max(0,1-p.age/p.life);
     if(p.age>=p.life){
-      scene.remove(p.mesh);p.mesh.geometry.dispose();p.mesh.material.dispose();
-      captureEffects.splice(i,1);
+      scene.remove(p.mesh);p.mesh.geometry.dispose();p.mesh.material.dispose();captureEffects.splice(i,1);
     }
   }
 }
@@ -642,10 +524,10 @@ function updateCaptureEffects(dt){
 function evaluate(){
   if(game.in_checkmate())return game.turn()==='w'?-100000:100000;
   if(game.in_draw()||game.in_stalemate())return 0;
-  const board=game.board();let score=0;
+  const b=game.board();let score=0;
   for(let r=0;r<8;r++)for(let c=0;c<8;c++){
-    const p=board[r][c];if(!p)continue;
-    let v=pieceValue[p.type]||0;
+    const p=b[r][c];if(!p)continue;
+    let v=values[p.type]||0;
     const center=Math.abs(3.5-c)+Math.abs(3.5-r);
     if(p.type==='n'||p.type==='b')v+=(7-center)*3;
     if(p.type==='p')v+=(p.color==='w'?6-r:r-1)*5;
@@ -659,52 +541,38 @@ function minimax(depth,alpha,beta,maxWhite){
   if(maxWhite){
     let best=-Infinity;
     for(const m of moves){
-      game.move(m);const score=minimax(depth-1,alpha,beta,false);game.undo();
-      best=Math.max(best,score);alpha=Math.max(alpha,best);
-      if(beta<=alpha)break;
+      game.move(m);const s=minimax(depth-1,alpha,beta,false);game.undo();
+      best=Math.max(best,s);alpha=Math.max(alpha,best);if(beta<=alpha)break;
     }
     return best;
   }
   let best=Infinity;
   for(const m of moves){
-    game.move(m);const score=minimax(depth-1,alpha,beta,true);game.undo();
-    best=Math.min(best,score);beta=Math.min(beta,best);
-    if(beta<=alpha)break;
+    game.move(m);const s=minimax(depth-1,alpha,beta,true);game.undo();
+    best=Math.min(best,s);beta=Math.min(beta,best);if(beta<=alpha)break;
   }
   return best;
 }
 function bestAIMove(level){
-  const moves=game.moves({verbose:true});
-  if(!moves.length)return null;
+  const moves=game.moves({verbose:true});if(!moves.length)return null;
   if(level===1){
-    const captures=moves.filter(m=>m.captured);
-    return captures.length&&Math.random()<.4
-      ?captures[Math.floor(Math.random()*captures.length)]
-      :moves[Math.floor(Math.random()*moves.length)];
+    const caps=moves.filter(m=>m.captured);
+    return caps.length&&Math.random()<.4?caps[Math.floor(Math.random()*caps.length)]:moves[Math.floor(Math.random()*moves.length)];
   }
-  const depth=level===2?2:3;
-  let best=Infinity,choices=[];
+  const depth=level===2?2:3;let best=Infinity,choices=[];
   for(const m of moves){
-    game.move(m);
-    const score=minimax(depth-1,-Infinity,Infinity,true);
-    game.undo();
-    if(score<best){best=score;choices=[m];}
-    else if(score===best)choices.push(m);
+    game.move(m);const s=minimax(depth-1,-Infinity,Infinity,true);game.undo();
+    if(s<best){best=s;choices=[m];}else if(s===best)choices.push(m);
   }
   return choices[Math.floor(Math.random()*choices.length)]||moves[0];
 }
 function scheduleAI(){
   if(game.game_over())return;
-  aiThinking=true;const token=++searchToken;updateUI();
-  showToast('Komputer sedang menganalisis langkah...');
+  aiThinking=true;const token=++searchToken;updateUI();showToast('Komputer sedang berpikir...');
   setTimeout(()=>{
-    if(token!==searchToken||game.game_over()){
-      aiThinking=false;updateUI();return;
-    }
+    if(token!==searchToken||game.game_over()){aiThinking=false;updateUI();return;}
     const move=bestAIMove(Number(document.getElementById('difficulty').value));
-    aiThinking=false;
-    if(move)performAnimatedMove(move,'b');
-    else updateUI();
+    aiThinking=false;if(move)animateMove(move,'b');else updateUI();
   },120);
 }
 
@@ -712,20 +580,15 @@ function updateUI(){
   const status=document.getElementById('status');
   const level=Number(document.getElementById('difficulty').value);
   document.getElementById('aiDetail').textContent='Level '+({1:'Pemula',2:'Menengah',3:'Sulit'}[level]);
-  document.getElementById('whitePlayer').classList.toggle('active',
-    game.turn()==='w'&&!game.game_over()&&!aiThinking);
-  document.getElementById('blackPlayer').classList.toggle('active',
-    game.turn()==='b'&&!game.game_over());
-
-  if(busy&&aiThinking)status.textContent='Komputer bergerak...';
+  document.getElementById('whitePlayer').classList.toggle('active',game.turn()==='w'&&!game.game_over()&&!aiThinking);
+  document.getElementById('blackPlayer').classList.toggle('active',game.turn()==='b'&&!game.game_over());
+  if(busy)status.textContent='Bidak melompat...';
   else if(aiThinking)status.textContent='Komputer berpikir...';
-  else if(busy)status.textContent='Bidak sedang bergerak...';
   else if(game.in_checkmate())status.textContent=game.turn()==='w'?'Skakmat · Komputer menang':'Skakmat · Anda menang!';
   else if(game.in_draw()||game.in_stalemate())status.textContent='Permainan seri';
   else if(game.in_check())status.textContent='Skak!';
   else status.textContent=game.turn()==='w'?'Giliran Anda':'Giliran komputer';
-
-  document.getElementById('undoBtn').disabled=game.history().length===0||busy||aiThinking;
+  document.getElementById('undoBtn').disabled=!game.history().length||busy||aiThinking;
   renderHistory();
 }
 function renderHistory(){
@@ -733,60 +596,46 @@ function renderHistory(){
   if(!h.length){el.innerHTML='<div class="history-empty">Pilih bidak emas untuk memulai.</div>';return;}
   let html='';
   for(let i=0;i<h.length;i+=2){
-    html+='<div class="move-row"><span class="move-number">'+(Math.floor(i/2)+1)+'.</span>'+
-      '<span class="move-white">'+escapeHTML(h[i]||'')+'</span>'+
-      '<span class="move-black">'+escapeHTML(h[i+1]||'')+'</span></div>';
+    html+='<div class="move-row"><span class="move-number">'+(Math.floor(i/2)+1)+'.</span><span class="move-white">'+escapeHTML(h[i]||'')+'</span><span class="move-black">'+escapeHTML(h[i+1]||'')+'</span></div>';
   }
   el.innerHTML=html;el.scrollTop=el.scrollHeight;
 }
-function escapeHTML(s){
-  return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-function showToast(message){
-  const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');
-  if(toastTimer)clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove('show'),1900);
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function showToast(s){
+  const el=document.getElementById('toast');el.textContent=s;el.classList.add('show');
+  if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),1900);
 }
 function clearEffects(){
-  captureEffects.forEach(p=>{
-    scene.remove(p.mesh);p.mesh.geometry.dispose();p.mesh.material.dispose();
-  });
+  captureEffects.forEach(p=>{scene.remove(p.mesh);p.mesh.geometry.dispose();p.mesh.material.dispose();});
   captureEffects.length=0;
 }
 function newGame(){
-  searchToken++;aiThinking=false;busy=false;moveAnimations=[];
-  game.reset();selectedSquare=null;legalTargets=[];hoveredPiece=null;
-  clearEffects();renderPieces();updateUI();
-  showToast('Permainan baru dimulai.');
+  searchToken++;aiThinking=false;busy=false;animations.length=0;game.reset();
+  selectedSquare=null;legalTargets=[];hoveredPiece=null;clearEffects();
+  renderPieces();updateUI();showToast('Permainan baru dimulai.');
 }
 function undoTurn(){
   if(busy||aiThinking)return;
   if(!game.history().length){showToast('Belum ada langkah untuk diurungkan.');return;}
-  game.undo();
-  if(game.turn()==='b'&&game.history().length)game.undo();
-  selectedSquare=null;legalTargets=[];renderPieces();updateUI();
-  showToast('Giliran terakhir diurungkan.');
+  game.undo();if(game.turn()==='b'&&game.history().length)game.undo();
+  selectedSquare=null;legalTargets=[];renderPieces();updateUI();showToast('Giliran terakhir diurungkan.');
 }
 function resetCamera(){
   camera.position.set(7.8,9.8,10.5);controls.target.set(0,.25,0);controls.update();
 }
 function animate(){
   requestAnimationFrame(animate);
-  const now=performance.now();
-  const dt=previousFrameTime?Math.min((now-previousFrameTime)/1000,.05):0;
-  previousFrameTime=now;
+  const now=performance.now(),dt=lastFrame?Math.min((now-lastFrame)/1000,.05):0;lastFrame=now;
   if(controls)controls.update();
-
   if(pieceGroup){
-    updateMoveAnimations();
+    updateAnimations();
     pieceGroup.children.forEach(p=>{
       if(!p.userData.square)return;
       if(p===hoveredPiece&&!busy&&!aiThinking){
         const phase=now*.008+p.userData.phase;
         p.position.y=BOARD_Y+.035+Math.abs(Math.sin(phase))*.055;
-        p.rotation.z=Math.sin(phase*.7)*.07;
-        p.rotation.y+=dt*.3;
-      }else if(!moveAnimations.some(a=>a.group===p)){
+        p.rotation.z=Math.sin(phase*.7)*.06;
+      }else if(!animations.some(a=>a.piece===p)){
         p.position.y=THREE.MathUtils.damp(p.position.y,BOARD_Y,10,dt);
         p.rotation.z=THREE.MathUtils.damp(p.rotation.z,0,10,dt);
       }
@@ -795,22 +644,17 @@ function animate(){
   updateCaptureEffects(dt);
   if(renderer&&scene&&camera)renderer.render(scene,camera);
 }
-
 function startApp(){
   if(typeof THREE==='undefined'||typeof Chess==='undefined'){
     document.getElementById('status').textContent='Library gagal dimuat';
-    showToast('Periksa koneksi internet, lalu muat ulang halaman.');
-    return;
+    showToast('Periksa koneksi internet lalu muat ulang.');return;
   }
-  game=new Chess();
-  setupScene();renderPieces();updateUI();
+  game=new Chess();setupScene();renderPieces();updateUI();
   document.getElementById('newGame').addEventListener('click',newGame);
   document.getElementById('undoBtn').addEventListener('click',undoTurn);
   document.getElementById('resetCamera').addEventListener('click',resetCamera);
   document.getElementById('clearSelection').addEventListener('click',clearSelection);
-  document.getElementById('difficulty').addEventListener('change',()=>{
-    updateUI();showToast('Tingkat AI diperbarui.');
-  });
+  document.getElementById('difficulty').addEventListener('change',updateUI);
   animate();
 }
 window.addEventListener('load',startApp);
