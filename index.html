@@ -1,69 +1,132 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hero Chess 3D — Catur vs AI</title>
+<title>Catur Klasik 3D — Lawan Komputer</title>
 <style>
 :root {
-  --bg:#10151d; --panel:#1b2430; --text:#edf2f7;
-  --muted:#aab5c5; --accent:#29b894; --light:#f0dfbd;
-  --dark:#527d62; --gold:#f6d365;
+  --bg:#15171b;
+  --panel:#22252b;
+  --text:#f5f5f5;
+  --muted:#b8bec8;
+  --accent:#d6b46a;
+  --light:#f4f4f0;
+  --dark:#34383e;
 }
-* { box-sizing:border-box }
-body {
-  margin:0; background:radial-gradient(ellipse at top,#24382f,var(--bg) 65%);
-  color:var(--text); font:16px system-ui,Segoe UI,sans-serif;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  color:var(--text);
+  background:radial-gradient(ellipse at top,#30343a,#121316 70%);
+  font-family:Arial,Helvetica,sans-serif;
 }
-.app { max-width:1100px; margin:auto; padding:20px }
-header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:18px }
-h1 { margin:4px 0; font-size:clamp(1.6rem,4vw,2.4rem) }
-.sub,.hint { color:var(--muted); line-height:1.5 }
-.layout { display:grid; grid-template-columns:minmax(280px,650px) minmax(230px,1fr); gap:20px; align-items:start }
-.board-wrap {
-  padding:12px; border-radius:18px;
-  background:linear-gradient(145deg,#ead4aa,#775238);
-  box-shadow:0 18px 40px #0008,inset 0 2px 3px #fff9;
+.app{max-width:1100px;margin:auto;padding:20px}
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;margin-bottom:18px
 }
-.board { display:grid; grid-template-columns:repeat(8,1fr); aspect-ratio:1; overflow:hidden; border-radius:8px }
-.sq {
-  border:0; border-radius:0; position:relative; display:flex;
-  align-items:center; justify-content:center; padding:0; aspect-ratio:1;
-  cursor:pointer; overflow:hidden;
+h1{font-size:clamp(24px,4vw,36px);margin:6px 0}
+.sub,.hint{color:var(--muted);line-height:1.6}
+.layout{
+  display:grid;grid-template-columns:minmax(280px,650px) minmax(230px,1fr);
+  gap:20px;align-items:start
 }
-.sq.light { background:linear-gradient(135deg,#fff0d1,#c9b48d); box-shadow:inset 2px 2px 3px #fff9,inset -2px -2px 4px #8b704c66 }
-.sq.dark { background:linear-gradient(135deg,#7fa68a,#315640); box-shadow:inset 2px 2px 3px #fff2,inset -2px -2px 4px #132c20aa }
-.sq.selected { box-shadow:inset 0 0 0 5px var(--gold) }
-.sq.target:after { content:""; position:absolute; width:23%; height:23%; border-radius:50%; background:#102e2390; z-index:3 }
-.sq.capture:after { content:""; position:absolute; inset:4px; border:4px solid #e24f5f; border-radius:50%; z-index:3 }
-.piece {
-  position:relative; z-index:2; width:82%; height:86%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:clamp(22px,5.2vw,48px); line-height:1;
-  border:2px solid #ffffff80; border-radius:42% 42% 36% 36%;
-  box-shadow:inset 0 3px 5px #ffffffa8,inset 0 -8px 8px #0005,
-             0 5px 0 #0005,0 9px 10px #0006;
-  transform:translateY(-3px); transition:transform .16s,filter .16s;
+.board-wrap{
+  background:linear-gradient(145deg,#777,#252525);
+  padding:12px;border-radius:10px;
+  box-shadow:0 18px 45px #0009,inset 0 2px 4px #fff5
 }
-.sq:hover .piece { transform:translateY(-6px) scale(1.06); filter:drop-shadow(0 0 7px var(--gold)) }
-.white-piece { background:radial-gradient(circle at 30% 18%,#fff,#d9efff 26%,#70a9d9 58%,#244c7b); text-shadow:0 2px 2px #1239 }
-.black-piece { background:radial-gradient(circle at 30% 18%,#f8d6ff,#a65ad6 27%,#51226e 62%,#160d27); border-color:#e6b8ff; text-shadow:0 2px 2px #13061d }
-.panel { background:var(--panel); padding:18px; border-radius:18px; box-shadow:0 12px 36px #0003 }
-.status { background:#21382f; color:#c4f2dc; padding:13px; border-radius:12px; font-weight:750; margin-bottom:12px }
-.actions { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 18px }
-button.btn { border:1px solid #3c4858; background:#222e3c; color:var(--text); padding:10px 13px; border-radius:10px; font-weight:700; cursor:pointer }
-button.primary { background:var(--accent); border-color:var(--accent); color:#05281e }
-button:disabled { opacity:.45; cursor:not-allowed }
-.moves { min-height:80px; max-height:260px; overflow:auto; display:grid; grid-template-columns:34px 1fr 1fr; gap:0 8px; font-variant-numeric:tabular-nums }
-.moves div { padding:6px 3px; border-bottom:1px solid #303947 }
-.movehead,.legend,.footer { color:var(--muted); font-size:.8rem }
-.legend { display:flex; justify-content:space-between; padding:8px 2px 0 }
-.footer { margin-top:18px }
-@media(max-width:760px) {
- .app { padding:12px } .layout { grid-template-columns:1fr }
- .piece { width:88%; height:88%; font-size:clamp(18px,7vw,36px) }
- .panel { order:2 }
+.board{
+  display:grid;grid-template-columns:repeat(8,1fr);
+  aspect-ratio:1;border:2px solid #111;overflow:hidden
+}
+.sq{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  aspect-ratio:1;border:0;border-radius:0;padding:0;cursor:pointer;
+  min-width:0;min-height:0;overflow:hidden
+}
+.sq.light{background:var(--light)}
+.sq.dark{background:var(--dark)}
+.sq.selected{box-shadow:inset 0 0 0 5px #e6b84f}
+.sq.target:after{
+  content:"";position:absolute;width:24%;height:24%;border-radius:50%;
+  background:#19a56b99;z-index:3;pointer-events:none
+}
+.sq.capture:after{
+  content:"";position:absolute;inset:3px;
+  border:4px solid #d84b4b;border-radius:50%;
+  z-index:3;pointer-events:none
+}
+.piece{
+  position:relative;z-index:2;
+  width:88%;height:91%;display:flex;
+  justify-content:center;align-items:center;
+  font-family:"DejaVu Sans","Segoe UI Symbol",serif;
+  font-size:clamp(27px,6vw,64px);
+  line-height:1;user-select:none;
+  transform:translateY(-2px);
+  transition:transform .15s,filter .15s;
+}
+.sq:hover .piece{
+  transform:translateY(-5px) scale(1.05);
+  filter:drop-shadow(0 5px 3px #0006)
+}
+/* Bidak putih: gading dengan volume 3D */
+.white-piece{
+  color:#fff!important;
+  -webkit-text-stroke:1px #777;
+  text-shadow:
+    0 1px 0 #ddd,
+    0 2px 0 #bbb,
+    0 3px 0 #999,
+    0 4px 0 #777,
+    0 6px 5px #0008;
+  filter:drop-shadow(0 2px 1px #0005)
+}
+/* Bidak hitam: hitam metalik */
+.black-piece{
+  color:#202124!important;
+  -webkit-text-stroke:1px #080808;
+  text-shadow:
+    0 1px 0 #555,
+    0 2px 0 #444,
+    0 3px 0 #333,
+    0 4px 0 #111,
+    0 6px 5px #0009;
+  filter:drop-shadow(0 2px 1px #0007)
+}
+.panel{
+  padding:18px;background:var(--panel);border:1px solid #393d44;
+  border-radius:12px;box-shadow:0 12px 35px #0004
+}
+.status{
+  padding:13px;border-radius:8px;background:#30343a;
+  border-left:4px solid var(--accent);font-weight:bold;line-height:1.5;
+  margin-bottom:12px
+}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+.btn{
+  background:#333840;color:white;border:1px solid #555b65;
+  border-radius:7px;padding:10px 13px;font-weight:bold;cursor:pointer
+}
+.btn.primary{background:var(--accent);color:#191919;border-color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.moves{
+  min-height:65px;max-height:240px;overflow:auto;
+  display:grid;grid-template-columns:35px 1fr 1fr;gap:0 8px
+}
+.moves div{padding:7px 3px;border-bottom:1px solid #383c44}
+.movehead,.legend,.footer{font-size:12px;color:var(--muted)}
+.legend{display:flex;justify-content:space-between;gap:8px;padding:10px 2px 0}
+.footer{text-align:center;margin:20px 0}
+@media(max-width:760px){
+  .app{padding:10px}
+  .layout{grid-template-columns:1fr;gap:14px}
+  .panel{order:2}
+  .board-wrap{padding:6px}
+  .piece{font-size:clamp(25px,9vw,48px)}
 }
 </style>
 </head>
@@ -71,9 +134,9 @@ button:disabled { opacity:.45; cursor:not-allowed }
 <main class="app">
 <header>
   <div>
-    <div style="color:#29b894;font-size:.78rem;font-weight:800;letter-spacing:.12em">HERO CHESS 3D</div>
-    <h1>⚔️ Catur: Pahlawan vs AI</h1>
-    <div class="sub">Kamu bermain sebagai pahlawan putih. Komputer menjadi pasukan gelap.</div>
+    <div style="color:#d6b46a;font-size:12px;letter-spacing:3px;font-weight:bold">CLASSIC CHESS 3D</div>
+    <h1>♟ Catur Klasik</h1>
+    <div class="sub">Papan hitam-putih · Bidak klasik · Lawan komputer</div>
   </div>
   <button class="btn primary" id="resetTop">↻ Mulai ulang</button>
 </header>
@@ -81,76 +144,118 @@ button:disabled { opacity:.45; cursor:not-allowed }
 <div class="layout">
   <section class="board-wrap">
     <div id="board" class="board" role="grid" aria-label="Papan catur"></div>
-    <div class="legend"><span>Pasukan putih di bawah</span><span id="turnLabel">Giliran kamu</span></div>
+    <div class="legend">
+      <span>Putih: kamu</span>
+      <span id="turnLabel">Giliran kamu</span>
+    </div>
   </section>
+
   <aside class="panel">
-    <div class="status" id="status" aria-live="polite">Giliran putih — pilih hero untuk bergerak.</div>
+    <div class="status" id="status" aria-live="polite">
+      Giliran putih. Pilih bidak untuk bergerak.
+    </div>
     <div class="actions">
       <button class="btn primary" id="reset">Permainan baru</button>
       <button class="btn" id="undo">Urungkan giliran</button>
     </div>
     <h3>Riwayat langkah</h3>
-    <div class="moves" id="moves"><div class="movehead">No.</div><div class="movehead">Putih</div><div class="movehead">Hitam</div></div>
+    <div class="moves" id="moves">
+      <div class="movehead">No.</div>
+      <div class="movehead">Putih</div>
+      <div class="movehead">Hitam</div>
+    </div>
     <h3>Cara bermain</h3>
-    <p class="hint">Klik karakter putih, lalu pilih kotak tujuan yang ditandai. Tunggu komputer membalas langkahmu.</p>
-    <p class="hint">Karakter: 🦸 Raja, 🧙 Ratu, 🛡️ Benteng, 🧝 Gajah, 🐉 Kuda, ⚔️ Pion. Pasukan hitam memakai karakter gelap.</p>
-    <p class="hint">Game berjalan langsung di browser tanpa instalasi. AI memakai pencarian langkah dasar.</p>
+    <p class="hint">
+      Klik bidak putih, kemudian klik kotak tujuan yang ditandai hijau.
+      Komputer bermain sebagai hitam dan akan membalas langkahmu.
+    </p>
+    <p class="hint">
+      Bidak: ♔ Raja · ♕ Ratu · ♖ Benteng · ♗ Gajah · ♘ Kuda · ♙ Pion.
+    </p>
+    <p class="hint">
+      Pilih “Mulai ulang” untuk pertandingan baru. “Urungkan giliran”
+      membatalkan langkahmu dan balasan komputer.
+    </p>
   </aside>
 </div>
-<div class="footer">Hero Chess 3D · Game catur browser · Gratis dimainkan</div>
+<div class="footer">Classic Chess 3D · Game browser gratis</div>
 </main>
 
 <script>
 (()=>{
 'use strict';
-const icons={wK:'🦸',wQ:'🧙',wR:'🛡️',wB:'🧝',wN:'🐉',wP:'⚔️',
-             bK:'🦹',bQ:'🧛',bR:'🏰',bB:'🥷',bN:'🐺',bP:'💀'};
-const names={K:'Raja',Q:'Ratu',R:'Benteng',B:'Gajah',N:'Kuda',P:'Pion'};
-const files='abcdefgh', $=id=>document.getElementById(id);
-let board,turn,selected,legal,castle,enPassant,history,records,gameOver,aiThinking=false,aiTimer=null;
+
+const ICON={
+ wK:'♔',wQ:'♕',wR:'♖',wB:'♗',wN:'♘',wP:'♙',
+ bK:'♚',bQ:'♛',bR:'♜',bB:'♝',bN:'♞',bP:'♟'
+};
+const NAME={K:'Raja',Q:'Ratu',R:'Benteng',B:'Gajah',N:'Kuda',P:'Pion'};
+const FILES='abcdefgh';
+const $=id=>document.getElementById(id);
+
+let board,turn,selected,legal,castle,enPassant;
+let history,records,gameOver,aiThinking,aiTimer;
 
 function xy(i){return [Math.floor(i/8),i%8]}
 function idx(r,c){return r*8+c}
 function inside(r,c){return r>=0&&r<8&&c>=0&&c<8}
 function color(p){return p?p[0]:null}
 function kind(p){return p?p[1]:null}
+
 function fresh(){
  if(aiTimer)clearTimeout(aiTimer);
  aiTimer=null;aiThinking=false;
  board=Array(64).fill(null);
  const back=['R','N','B','Q','K','B','N','R'];
- for(let c=0;c<8;c++){board[c]='b'+back[c];board[8+c]='bP';board[48+c]='wP';board[56+c]='w'+back[c]}
- turn='w';selected=null;legal=[];castle={wk:true,wq:true,bk:true,bq:true};
- enPassant=null;history=[];records=[];gameOver=false;render();
- status('Giliran kamu — pilih karakter putih.');
+ for(let c=0;c<8;c++){
+  board[c]='b'+back[c];board[8+c]='bP';
+  board[48+c]='wP';board[56+c]='w'+back[c];
+ }
+ turn='w';selected=null;legal=[];
+ castle={wk:true,wq:true,bk:true,bq:true};
+ enPassant=null;history=[];records=[];gameOver=false;
+ render();status('Giliran putih — pilih bidakmu.');
 }
+
 function attacks(b,sq,by){
  const [r,c]=xy(sq);
  for(let i=0;i<64;i++){
   const p=b[i];if(color(p)!==by)continue;
   const [pr,pc]=xy(i),dr=r-pr,dc=c-pc,k=kind(p);
   if(k==='P'&&dr===(by==='w'?-1:1)&&Math.abs(dc)===1)return true;
-  if(k==='N'&&((Math.abs(dr)===2&&Math.abs(dc)===1)||(Math.abs(dr)===1&&Math.abs(dc)===2)))return true;
+  if(k==='N'&&((Math.abs(dr)===2&&Math.abs(dc)===1)||
+     (Math.abs(dr)===1&&Math.abs(dc)===2)))return true;
   if(k==='K'&&Math.max(Math.abs(dr),Math.abs(dc))===1)return true;
   if('QRB'.includes(k)){
-   const diag=Math.abs(dr)===Math.abs(dc)&&dr!==0,straight=(dr===0)!==(dc===0);
+   const diag=Math.abs(dr)===Math.abs(dc)&&dr!==0;
+   const straight=(dr===0)!==(dc===0);
    if((k==='Q'&&(diag||straight))||(k==='B'&&diag)||(k==='R'&&straight)){
-    const sr=Math.sign(dr),sc=Math.sign(dc);let rr=pr+sr,cc=pc+sc,clear=true;
-    while(rr!==r||cc!==c){if(b[idx(rr,cc)]){clear=false;break}rr+=sr;cc+=sc}
+    const sr=Math.sign(dr),sc=Math.sign(dc);
+    let rr=pr+sr,cc=pc+sc,clear=true;
+    while(rr!==r||cc!==c){
+     if(b[idx(rr,cc)]){clear=false;break}
+     rr+=sr;cc+=sc;
+    }
     if(clear)return true;
    }
   }
  }
  return false;
 }
+
 function kingAt(b,col){return b.findIndex(p=>p===col+'K')}
-function inCheck(b,col){const k=kingAt(b,col);return k<0||attacks(b,k,col==='w'?'b':'w')}
+function inCheck(b,col){
+ const k=kingAt(b,col);
+ return k<0||attacks(b,k,col==='w'?'b':'w');
+}
+
 function pseudo(b,from,includeCastle=true){
  const p=b[from];if(!p)return[];
  const col=color(p),k=kind(p),[r,c]=xy(from),out=[];
  const add=(rr,cc)=>{
   if(!inside(rr,cc))return false;
-  const to=idx(rr,cc),q=b[to];if(color(q)===col)return false;
+  const to=idx(rr,cc),q=b[to];
+  if(color(q)===col)return false;
   out.push(to);return !q;
  };
  if(k==='P'){
@@ -159,37 +264,50 @@ function pseudo(b,from,includeCastle=true){
    out.push(idx(r+d,c));
    if(r===start&&!b[idx(r+2*d,c)])out.push(idx(r+2*d,c));
   }
-  for(const dc of [-1,1])if(inside(r+d,c+dc)){
+  for(const dc of [-1,1]){
+   if(!inside(r+d,c+dc))continue;
    const to=idx(r+d,c+dc);
    if(color(b[to])&&color(b[to])!==col)out.push(to);
    if(enPassant===to)out.push(to);
   }
  }else if(k==='N'){
-  for(const [dr,dc] of [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]])add(r+dr,c+dc);
+  for(const [dr,dc] of [[-2,-1],[-2,1],[-1,-2],[-1,2],
+    [1,-2],[1,2],[2,-1],[2,1]])add(r+dr,c+dc);
  }else if(k==='K'){
-  for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++)if(dr||dc)add(r+dr,c+dc);
+  for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++)
+   if(dr||dc)add(r+dr,c+dc);
   if(includeCastle&&!inCheck(b,col)){
    const row=col==='w'?7:0,enemy=col==='w'?'b':'w';
    if(from===idx(row,4)){
-    const side=col;
-    if(castle[side+'k']&&b[idx(row,7)]===col+'R'&&!b[idx(row,5)]&&!b[idx(row,6)]&&!attacks(b,idx(row,5),enemy)&&!attacks(b,idx(row,6),enemy))out.push(idx(row,6));
-    if(castle[side+'q']&&b[idx(row,0)]===col+'R'&&!b[idx(row,1)]&&!b[idx(row,2)]&&!b[idx(row,3)]&&!attacks(b,idx(row,3),enemy)&&!attacks(b,idx(row,2),enemy))out.push(idx(row,2));
+    if(castle[col+'k']&&b[idx(row,7)]===col+'R'&&
+       !b[idx(row,5)]&&!b[idx(row,6)]&&
+       !attacks(b,idx(row,5),enemy)&&!attacks(b,idx(row,6),enemy))
+       out.push(idx(row,6));
+    if(castle[col+'q']&&b[idx(row,0)]===col+'R'&&
+       !b[idx(row,1)]&&!b[idx(row,2)]&&!b[idx(row,3)]&&
+       !attacks(b,idx(row,3),enemy)&&!attacks(b,idx(row,2),enemy))
+       out.push(idx(row,2));
    }
   }
  }else{
   const dirs=[];
   if(k==='R'||k==='Q')dirs.push([-1,0],[1,0],[0,-1],[0,1]);
   if(k==='B'||k==='Q')dirs.push([-1,-1],[-1,1],[1,-1],[1,1]);
-  for(const [dr,dc] of dirs){let rr=r+dr,cc=c+dc;while(inside(rr,cc)){if(!add(rr,cc))break;rr+=dr;cc+=dc}}
+  for(const [dr,dc] of dirs){
+   let rr=r+dr,cc=c+dc;
+   while(inside(rr,cc)){if(!add(rr,cc))break;rr+=dr;cc+=dc}
+  }
  }
  return out;
 }
+
 function legalMoves(from){
  const p=board[from];if(!p)return[];
  return pseudo(board,from).filter(to=>{
   const b=board.slice(),[fr,fc]=xy(from),[tr,tc]=xy(to);
   b[to]=b[from];b[from]=null;
-  if(kind(p)==='P'&&to===enPassant&&fc!==tc)b[to+(color(p)==='w'?8:-8)]=null;
+  if(kind(p)==='P'&&to===enPassant&&fc!==tc)
+   b[to+(color(p)==='w'?8:-8)]=null;
   if(kind(p)==='K'&&Math.abs(tc-fc)===2){
    if(tc>fc){b[from+1]=b[from+3];b[from+3]=null}
    else{b[from-1]=b[from-4];b[from-4]=null}
@@ -197,15 +315,31 @@ function legalMoves(from){
   return !inCheck(b,color(p));
  });
 }
+
 function allLegal(col){
- const out=[];for(let i=0;i<64;i++)if(color(board[i])===col)for(const to of legalMoves(i))out.push([i,to]);
+ const out=[];
+ for(let i=0;i<64;i++)
+  if(color(board[i])===col)
+   for(const to of legalMoves(i))out.push([i,to]);
  return out;
 }
-function snapshot(){return {board:board.slice(),turn,castle:{...castle},enPassant,gameOver}}
-function restore(s){board=s.board;turn=s.turn;castle=s.castle;enPassant=s.enPassant;gameOver=s.gameOver}
+
+function snapshot(){
+ return {
+  board:board.slice(),turn,castle:{...castle},enPassant,
+  records:records.map(x=>({...x})),gameOver
+ };
+}
+function restore(s){
+ board=s.board;turn=s.turn;castle=s.castle;
+ enPassant=s.enPassant;records=s.records;gameOver=s.gameOver;
+}
+
 function simulate(from,to){
- const p=board[from],col=color(p),k=kind(p),[fr,fc]=xy(from),[tr,tc]=xy(to);
- if(k==='P'&&to===enPassant&&fc!==tc)board[to+(col==='w'?8:-8)]=null;
+ const p=board[from],col=color(p),k=kind(p);
+ const [fr,fc]=xy(from),[tr,tc]=xy(to);
+ if(k==='P'&&to===enPassant&&fc!==tc)
+  board[to+(col==='w'?8:-8)]=null;
  board[to]=p;board[from]=null;
  if(k==='K'&&Math.abs(tc-fc)===2){
   if(tc>fc){board[idx(fr,5)]=board[idx(fr,7)];board[idx(fr,7)]=null}
@@ -213,76 +347,103 @@ function simulate(from,to){
  }
  if(k==='K'){castle[col+'k']=false;castle[col+'q']=false}
  if(k==='R'){
-  if(from===56)castle.wq=false;if(from===63)castle.wk=false;
-  if(from===0)castle.bq=false;if(from===7)castle.bk=false;
+  if(from===56)castle.wq=false;
+  if(from===63)castle.wk=false;
+  if(from===0)castle.bq=false;
+  if(from===7)castle.bk=false;
  }
  if(k==='P'&&(tr===0||tr===7))board[to]=col+'Q';
  enPassant=k==='P'&&Math.abs(tr-fr)===2?idx((tr+fr)/2,fc):null;
  turn=turn==='w'?'b':'w';
 }
+
 function evaluate(){
- const value={P:100,N:320,B:335,R:500,Q:900,K:20000};let score=0;
+ const value={P:100,N:320,B:330,R:500,Q:900,K:20000};
+ let score=0;
  for(let i=0;i<64;i++){
   const p=board[i];if(!p)continue;
-  const [r,c]=xy(i),center=3.5-(Math.abs(3.5-r)+Math.abs(3.5-c))/2;
+  const [r,c]=xy(i);
+  const center=3.5-(Math.abs(3.5-r)+Math.abs(3.5-c))/2;
   let v=value[kind(p)]||0;
   if(kind(p)==='P')v+=(color(p)==='w'?(6-r):(r-1))*7;
   if('NBQ'.includes(kind(p)))v+=center*5;
-  score+=(color(p)==='w'?v:-v);
+  score+=color(p)==='w'?v:-v;
  }
  return score;
 }
+
 function search(depth,alpha,beta){
  const moves=allLegal(turn);
- if(!moves.length)return inCheck(board,turn)?(turn==='w'?-30000-depth:30000+depth):0;
+ if(!moves.length)
+  return inCheck(board,turn)?(turn==='w'?-30000-depth:30000+depth):0;
  if(depth===0)return evaluate();
- const maximizing=turn==='w';let best=maximizing?-Infinity:Infinity;
+ const maximizing=turn==='w';
+ let best=maximizing?-Infinity:Infinity;
  for(const [from,to] of moves){
-  const s=snapshot();simulate(from,to);const score=search(depth-1,alpha,beta);restore(s);
+  const s=snapshot();simulate(from,to);
+  const score=search(depth-1,alpha,beta);restore(s);
   if(maximizing){best=Math.max(best,score);alpha=Math.max(alpha,best)}
   else{best=Math.min(best,score);beta=Math.min(beta,best)}
   if(beta<=alpha)break;
  }
  return best;
 }
+
 function chooseAiMove(){
  const moves=allLegal('b');if(!moves.length)return null;
- let best=null,bestScore=Infinity,beta=Infinity;
+ let best=null,bestScore=Infinity;
  for(const [from,to] of moves){
-  const s=snapshot();simulate(from,to);const score=search(2,-Infinity,beta);restore(s);
+  const s=snapshot();simulate(from,to);
+  const score=search(2,-Infinity,Infinity);restore(s);
   if(score<bestScore){bestScore=score;best=[from,to]}
-  beta=Math.min(beta,bestScore);
  }
  return best;
 }
-function status(s){
- $('status').textContent=s;
- $('turnLabel').textContent=aiThinking?'Komputer berpikir…':turn==='w'?'Giliran kamu':'Giliran komputer';
+
+function status(text){
+ $('status').textContent=text;
+ $('turnLabel').textContent=aiThinking?'Komputer berpikir…':
+  turn==='w'?'Giliran kamu':'Giliran komputer';
 }
+
 function render(){
  const el=$('board');el.innerHTML='';
  for(let i=0;i<64;i++){
   const [r,c]=xy(i),btn=document.createElement('button');
   btn.className='sq '+((r+c)%2?'dark':'light');
   btn.setAttribute('role','gridcell');
-  btn.setAttribute('aria-label',files[c]+(8-r)+(board[i]?' '+(color(board[i])==='w'?'putih ':'hitam ')+names[kind(board[i])]:'')); 
+  btn.setAttribute('aria-label',FILES[c]+(8-r)+
+   (board[i]?' '+(color(board[i])==='w'?'putih ':'hitam ')+NAME[kind(board[i])]:''));
   if(i===selected)btn.classList.add('selected');
   if(legal.includes(i))btn.classList.add(board[i]?'capture':'target');
   if(board[i]){
-   const span=document.createElement('span');span.className='piece '+(color(board[i])==='w'?'white-piece':'black-piece');
-   span.textContent=icons[board[i]];btn.appendChild(span);
+   const span=document.createElement('span');
+   span.className='piece '+(color(board[i])==='w'?'white-piece':'black-piece');
+   span.textContent=ICON[board[i]];
+   btn.appendChild(span);
   }
-  btn.addEventListener('click',()=>clickSquare(i));el.appendChild(btn);
+  btn.addEventListener('click',()=>clickSquare(i));
+  el.appendChild(btn);
  }
- const m=$('moves');m.innerHTML='<div class="movehead">No.</div><div class="movehead">Putih</div><div class="movehead">Hitam</div>';
- records.forEach((x,i)=>[String(i+1)+'.',x.w||'—',x.b||''].forEach(v=>{const d=document.createElement('div');d.textContent=v;m.appendChild(d)}));
- m.scrollTop=m.scrollHeight;$('undo').disabled=!history.length;
+ const m=$('moves');
+ m.innerHTML='<div class="movehead">No.</div><div class="movehead">Putih</div><div class="movehead">Hitam</div>';
+ records.forEach((x,i)=>{
+  [String(i+1)+'.',x.w||'—',x.b||''].forEach(v=>{
+   const d=document.createElement('div');d.textContent=v;m.appendChild(d);
+  });
+ });
+ m.scrollTop=m.scrollHeight;
+ $('undo').disabled=!history.length||aiThinking;
 }
+
 function move(from,to){
- const p=board[from],col=color(p),k=kind(p),[fr,fc]=xy(from),[tr,tc]=xy(to),captured=board[to];
- history.push({board:board.slice(),turn,castle:{...castle},enPassant,records:records.map(x=>({...x})),gameOver});
+ const p=board[from],col=color(p),k=kind(p);
+ const [fr,fc]=xy(from),[tr,tc]=xy(to),captured=board[to];
+ history.push(snapshot());
  let note='';
- if(k==='P'&&to===enPassant&&fc!==tc){board[to+(col==='w'?8:-8)]=null;note=' e.p.'}
+ if(k==='P'&&to===enPassant&&fc!==tc){
+  board[to+(col==='w'?8:-8)]=null;note=' e.p.';
+ }
  board[to]=p;board[from]=null;
  if(k==='K'&&Math.abs(tc-fc)===2){
   if(tc>fc){board[idx(fr,5)]=board[idx(fr,7)];board[idx(fr,7)]=null;note=' O-O'}
@@ -290,49 +451,66 @@ function move(from,to){
  }
  if(k==='K'){castle[col+'k']=false;castle[col+'q']=false}
  if(k==='R'){
-  if(from===56)castle.wq=false;if(from===63)castle.wk=false;
-  if(from===0)castle.bq=false;if(from===7)castle.bk=false;
+  if(from===56)castle.wq=false;
+  if(from===63)castle.wk=false;
+  if(from===0)castle.bq=false;
+  if(from===7)castle.bk=false;
  }
  if(captured==='wR'){if(to===56)castle.wq=false;if(to===63)castle.wk=false}
  if(captured==='bR'){if(to===0)castle.bq=false;if(to===7)castle.bk=false}
  enPassant=k==='P'&&Math.abs(tr-fr)===2?idx((tr+fr)/2,fc):null;
  if(k==='P'&&(tr===0||tr===7)){
   let choice='Q';
-  if(col==='w')choice=(prompt('Promosi pion: Q (Ratu), R (Benteng), B (Gajah), N (Kuda)','Q')||'Q').toUpperCase();
-  board[to]=col+('QRBN'.includes(choice)?choice:'Q');note+=' ='+board[to][1];
+  if(col==='w'){
+   choice=(prompt('Promosi pion: Q=Ratu, R=Benteng, B=Gajah, N=Kuda','Q')||'Q').toUpperCase();
+  }
+  board[to]=col+('QRBN'.includes(choice)?choice:'Q');
+  note+=' ='+board[to][1];
  }
- let notation=(k==='P'?files[fc]:'')+(captured||note.includes('e.p.')?'x':'')+files[tc]+(8-tr)+note;
+ let notation=(k==='P'?FILES[fc]:'')+
+  (captured||note.includes('e.p.')?'x':'')+FILES[tc]+(8-tr)+note;
  turn=turn==='w'?'b':'w';
  const check=inCheck(board,turn),moves=allLegal(turn);
- if(check)notation+='+';
- if(records.length===0||turn==='b')records.push({w:notation,b:''});else records[records.length-1].b=notation;
- if(!moves.length){gameOver=true;if(check){notation+='#';status('Skakmat! '+(turn==='w'?'Hitam':'Putih')+' menang.')}else status('Remis — tidak ada langkah legal.')}
- else status((turn==='w'?'Giliran putih':'Giliran hitam')+(check?' — SKAK!':''));
+ if(records.length===0||turn==='b')records.push({w:notation,b:''});
+ else records[records.length-1].b=notation;
+ if(!moves.length){
+  gameOver=true;
+  if(check)status('Skakmat! '+(turn==='w'?'Hitam':'Putih')+' menang.');
+  else status('Remis — tidak ada langkah legal.');
+ }else status((turn==='w'?'Giliran putih':'Giliran hitam')+(check?' — SKAK!':''));
  render();
 }
+
 function clickSquare(i){
  if(gameOver||aiThinking||turn!=='w')return;
  if(selected!==null&&legal.includes(i)){
-  move(selected,i);
+  move(selected,i);selected=null;legal=[];
   if(!gameOver&&turn==='b'){
-   aiThinking=true;status('Komputer sedang berpikir…');render();$('undo').disabled=true;
+   aiThinking=true;status('Komputer sedang berpikir…');render();
    aiTimer=setTimeout(()=>{
-    aiTimer=null;const chosen=chooseAiMove();aiThinking=false;
+    aiTimer=null;
+    const chosen=chooseAiMove();aiThinking=false;
     if(chosen)move(chosen[0],chosen[1]);
-    else{gameOver=true;status('Permainan selesai.')}
-   },120);
+    else{gameOver=true;status('Permainan selesai.');render()}
+   },100);
   }
   return;
  }
- if(color(board[i])===turn){selected=i;legal=legalMoves(i);render()}
- else{selected=null;legal=[];render()}
+ if(color(board[i])===turn){
+  selected=i;legal=legalMoves(i);render();
+ }else{
+  selected=null;legal=[];render();
+ }
 }
+
 function undo(){
  if(!history.length||aiThinking)return;
  let s=history.pop();
  if(turn==='w'&&history.length)s=history.pop();
- restore(s);records=s.records;selected=null;legal=[];render();status('Giliran terakhir diurungkan.');
+ restore(s);selected=null;legal=[];
+ render();status('Giliran terakhir diurungkan.');
 }
+
 $('reset').addEventListener('click',fresh);
 $('resetTop').addEventListener('click',fresh);
 $('undo').addEventListener('click',undo);
