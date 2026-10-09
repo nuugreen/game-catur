@@ -4,28 +4,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nugreen Chess 3D — Play vs AI</title>
+<title>Nugreen Chess 3D</title>
 
 <style>
 :root {
-  --bg:#080b10;
-  --panel:#111722;
-  --panel2:#171f2c;
-  --line:#293445;
-  --gold:#d8b56d;
-  --text:#eef3fa;
-  --muted:#99a8bb;
-  --green:#42d392;
-  --red:#ff7474;
+  --bg:#090c11;
+  --panel:#121822;
+  --panel2:#1a2230;
+  --line:#2b3543;
+  --gold:#c49a45;
+  --text:#edf0f5;
+  --muted:#9ca8b8;
+  --green:#42a878;
 }
 * { box-sizing:border-box; }
+
 body {
   margin:0;
-  background:radial-gradient(ellipse at top,#182232 0%,#080b10 65%);
+  min-height:100vh;
+  background:radial-gradient(ellipse at top,#19212c 0%,#090c11 68%);
   color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
-  min-height:100vh;
 }
+
 header {
   display:flex;
   justify-content:space-between;
@@ -33,116 +34,292 @@ header {
   gap:14px;
   padding:18px 22px;
   border-bottom:1px solid var(--line);
-  background:rgba(8,11,16,.9);
+  background:rgba(9,12,17,.96);
 }
-.brand { display:flex;align-items:center;gap:12px; }
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
 .logo {
-  width:44px;height:44px;border-radius:12px;
-  display:grid;place-items:center;
-  background:linear-gradient(145deg,#f2d99a,#9a7130);
-  color:#111;font-size:26px;font-weight:900;
-  box-shadow:0 0 22px #d8b56d30;
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#d9b96f,#896323);
+  color:#17120a;
+  font-size:26px;
+  font-weight:900;
 }
-h1 { font-size:19px;letter-spacing:2px;margin:0; }
-.subtitle { color:var(--muted);font-size:12px;margin-top:5px; }
+
+h1 {
+  margin:0;
+  font-size:19px;
+  letter-spacing:2px;
+}
+
+.subtitle {
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+
 .status {
-  font-size:12px;color:var(--green);
-  border:1px solid #42d39255;padding:8px 11px;
-  border-radius:20px;white-space:nowrap;
+  font-size:12px;
+  color:#65c99b;
+  border:1px solid #42a87855;
+  padding:8px 11px;
+  border-radius:20px;
+  white-space:nowrap;
 }
+
 main {
-  max-width:1450px;margin:auto;padding:20px;
-  display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;
+  max-width:1450px;
+  margin:auto;
+  padding:20px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 320px;
+  gap:20px;
 }
+
 .board-panel,.panel {
-  background:rgba(17,23,34,.92);
-  border:1px solid var(--line);border-radius:16px;
-  overflow:hidden;box-shadow:0 15px 45px #0004;
+  background:rgba(18,24,34,.96);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 12px 35px #0003;
 }
+
 .board-top {
-  display:flex;justify-content:space-between;align-items:center;
-  padding:13px 16px;border-bottom:1px solid var(--line);
-  gap:10px;flex-wrap:wrap;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:13px 16px;
+  border-bottom:1px solid var(--line);
 }
-.board-top strong {font-size:13px;letter-spacing:1px;}
-#turnBadge {font-size:12px;color:var(--gold);}
+
+.board-top strong {
+  font-size:13px;
+  letter-spacing:1px;
+}
+
+#turnBadge {
+  font-size:12px;
+  color:var(--gold);
+}
+
 #stage {
-  width:100%;height:min(68vh,700px);min-height:360px;
-  display:block;position:relative;overflow:hidden;
+  width:100%;
+  height:min(68vh,700px);
+  min-height:360px;
+  overflow:hidden;
 }
-#stage canvas {display:block;width:100%;height:100%;}
+
+#stage canvas {
+  display:block;
+  width:100%;
+  height:100%;
+}
+
 .board-footer {
-  padding:12px 16px;color:var(--muted);font-size:12px;
-  display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding:12px 16px;
+  color:var(--muted);
+  font-size:12px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
 }
-.sidebar {display:flex;flex-direction:column;gap:14px;min-width:0;}
-.panel {padding:16px;}
+
+.sidebar {
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  min-width:0;
+}
+
+.panel { padding:16px; }
+
 .panel h2 {
-  margin:0 0 14px;font-size:13px;letter-spacing:1.2px;
-  text-transform:uppercase;color:var(--gold);
+  margin:0 0 14px;
+  font-size:13px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  color:var(--gold);
 }
-.field-label {display:block;color:var(--muted);font-size:12px;margin:12px 0 7px;}
+
+.field-label {
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin:12px 0 7px;
+}
+
 select,button {
-  font:inherit;border-radius:9px;min-height:39px;
+  font:inherit;
+  border-radius:9px;
+  min-height:39px;
 }
+
 select {
-  width:100%;padding:9px 10px;color:var(--text);
-  background:#0a0f17;border:1px solid var(--line);
+  width:100%;
+  padding:9px 10px;
+  color:var(--text);
+  background:#0b1017;
+  border:1px solid var(--line);
 }
+
 button {
-  border:1px solid var(--line);padding:9px 12px;
-  background:var(--panel2);color:var(--text);cursor:pointer;
-  transition:background .15s,border-color .15s,transform .15s;
+  border:1px solid var(--line);
+  padding:9px 12px;
+  background:var(--panel2);
+  color:var(--text);
+  cursor:pointer;
+  transition:background .15s,border-color .15s;
 }
-button:hover {border-color:var(--gold);background:#222d3d;}
-button:active {transform:scale(.98);}
+
+button:hover {
+  border-color:var(--gold);
+  background:#222c3a;
+}
+
 button.primary {
-  color:#17120a;background:linear-gradient(135deg,#f0d89b,#c39a4b);
-  border-color:#e2c47f;font-weight:700;
+  color:#17120a;
+  background:linear-gradient(135deg,#ddc17f,#b58a37);
+  border-color:#c9a65e;
+  font-weight:700;
 }
-button.primary:hover {background:#f7e4b3;}
-button:disabled {opacity:.4;cursor:not-allowed;}
-.button-row {display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
-.full {width:100%;margin-top:10px;}
+
+button.primary:hover {
+  background:#e4cc94;
+}
+
+button:disabled {
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.button-row {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+
+.full {
+  width:100%;
+  margin-top:10px;
+}
+
 .stats {
-  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
 }
+
 .stat {
-  background:#0a0f17;border:1px solid var(--line);
-  border-radius:10px;padding:11px;
+  background:#0b1017;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:11px;
 }
-.stat span {display:block;color:var(--muted);font-size:11px;}
-.stat strong {display:block;font-size:18px;margin-top:5px;}
+
+.stat span {
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.stat strong {
+  display:block;
+  font-size:18px;
+  margin-top:5px;
+}
+
 #message {
-  padding:11px;border-radius:9px;background:#0a0f17;
-  border:1px solid var(--line);font-size:13px;line-height:1.5;
+  padding:11px;
+  border-radius:9px;
+  background:#0b1017;
+  border:1px solid var(--line);
+  font-size:13px;
+  line-height:1.5;
 }
+
 #history {
-  max-height:190px;overflow:auto;font-size:12px;
-  color:#cbd5e2;line-height:1.9;
+  max-height:190px;
+  overflow:auto;
+  font-size:12px;
+  color:#cbd5e2;
+  line-height:1.9;
 }
+
 .move-line {
-  display:grid;grid-template-columns:30px 1fr 1fr;
+  display:grid;
+  grid-template-columns:30px 1fr 1fr;
   border-bottom:1px solid #ffffff0a;
 }
-.move-line span:first-child {color:var(--muted);}
-.move-line span {padding:2px 4px;}
-.hint {color:var(--muted);font-size:11px;line-height:1.5;margin-top:10px;}
-#thinking {color:var(--gold);font-size:12px;min-height:17px;margin-top:9px;}
-@media(max-width:900px) {
-  main {grid-template-columns:1fr;padding:12px;}
-  #stage {height:min(66vw,600px);min-height:330px;}
-  .sidebar {display:grid;grid-template-columns:1fr 1fr;}
-  .sidebar .panel:last-child {grid-column:1/-1;}
+
+.move-line span { padding:2px 4px; }
+.move-line span:first-child { color:var(--muted); }
+
+.hint {
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.6;
+  margin-top:10px;
 }
+
+#thinking {
+  color:var(--gold);
+  font-size:12px;
+  min-height:17px;
+  margin-top:9px;
+}
+
+@media(max-width:900px) {
+  main {
+    grid-template-columns:1fr;
+    padding:12px;
+  }
+
+  #stage {
+    height:min(66vw,600px);
+    min-height:330px;
+  }
+
+  .sidebar {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .sidebar .panel:last-child {
+    grid-column:1/-1;
+  }
+}
+
 @media(max-width:560px) {
-  header {padding:13px;}
-  h1 {font-size:15px;letter-spacing:1px;}
-  .subtitle {font-size:10px;}
-  .status {font-size:10px;padding:7px;}
-  main {padding:9px;gap:12px;}
-  #stage {height:95vw;min-height:300px;max-height:480px;}
-  .sidebar {display:flex;}
+  header { padding:13px; }
+  h1 { font-size:15px;letter-spacing:1px; }
+  .subtitle { font-size:10px; }
+  .status { font-size:10px;padding:7px; }
+
+  main {
+    padding:9px;
+    gap:12px;
+  }
+
+  #stage {
+    height:95vw;
+    min-height:300px;
+    max-height:480px;
+  }
+
+  .sidebar { display:flex; }
 }
 </style>
 </head>
@@ -153,7 +330,7 @@ button:disabled {opacity:.4;cursor:not-allowed;}
     <div class="logo">♞</div>
     <div>
       <h1>NUGREEN CHESS 3D</h1>
-      <div class="subtitle">Modern chess • Play against AI</div>
+      <div class="subtitle">Modern Chess • Play Against AI</div>
     </div>
   </div>
   <div class="status">● AI READY</div>
@@ -165,10 +342,12 @@ button:disabled {opacity:.4;cursor:not-allowed;}
       <strong>PAPAN CATUR 3D</strong>
       <span id="turnBadge">Giliran: Putih</span>
     </div>
+
     <div id="stage"></div>
+
     <div class="board-footer">
       <span>Klik bidak lalu pilih kotak tujuan.</span>
-      <span>Putih: Kamu &nbsp;|&nbsp; Hitam: AI</span>
+      <span>Putih: Kamu | Hitam: AI</span>
     </div>
   </section>
 
@@ -184,25 +363,34 @@ button:disabled {opacity:.4;cursor:not-allowed;}
       </select>
 
       <div class="hint">
-        Pemula: respons cepat dan sederhana.<br>
-        Menengah: menilai beberapa kemungkinan langkah.<br>
-        Sulit: pencarian lebih dalam dan evaluasi posisi.
+        Pemula: pencarian satu langkah.<br>
+        Menengah: pencarian dua langkah.<br>
+        Sulit: pencarian tiga langkah.
       </div>
 
       <button id="newGame" class="primary full">＋ Permainan Baru</button>
+
       <div class="button-row">
         <button id="undo">↶ Batalkan Langkah</button>
         <button id="resetCamera">◎ Atur Kamera</button>
       </div>
+
       <div id="thinking"></div>
     </section>
 
     <section class="panel">
       <h2>Status permainan</h2>
       <div id="message">Permainan siap. Kamu bermain sebagai putih.</div>
+
       <div class="stats" style="margin-top:10px">
-        <div class="stat"><span>Langkah</span><strong id="moveCount">0</strong></div>
-        <div class="stat"><span>Level AI</span><strong id="levelValue">2</strong></div>
+        <div class="stat">
+          <span>Jumlah langkah</span>
+          <strong id="moveCount">0</strong>
+        </div>
+        <div class="stat">
+          <span>Level AI</span>
+          <strong id="levelValue">2</strong>
+        </div>
       </div>
     </section>
 
@@ -225,7 +413,8 @@ const stage = document.getElementById('stage');
 const $ = id => document.getElementById(id);
 
 if (!window.THREE || !window.Chess) {
-  stage.innerHTML = '<div style="padding:24px;color:#ff9999">Library permainan gagal dimuat. Periksa koneksi internet lalu muat ulang halaman.</div>';
+  stage.innerHTML =
+    '<div style="padding:24px;color:#e6c878">Library permainan tidak berhasil dimuat. Periksa koneksi internet dan muat ulang halaman.</div>';
   return;
 }
 
@@ -233,43 +422,58 @@ const game = new Chess();
 const S = 1.15;
 const BOARD = 8 * S;
 const BOARD_Y = 0.22;
+const files = 'abcdefgh';
 
 let scene, camera, renderer, controls;
 let boardGroup, pieceGroup, markerGroup;
 let raycaster, pointer;
-let squareMeshes = {};
-let pieceMeshes = {};
 let selected = null;
 let legalMoves = [];
 let busy = false;
 let gameOver = false;
 let searchToken = 0;
 
-const WHITE = 0xffffff;
-const BLACK = 0x080a0f;
-const GOLD = 0xd7b36a;
-const files = 'abcdefgh';
-
-const material = (color, roughness=0.55, metalness=0.05) =>
+const material = (color, roughness=.55, metalness=.05) =>
   new THREE.MeshStandardMaterial({color,roughness,metalness});
 
-const whiteMat = material(0xf3eee0,0.3,0.12);
-const blackMat = material(0x080a0e,0.28,0.22);
-const goldMat = material(GOLD,0.28,0.72);
-const lightSquareMat = material(0xe6e4dc,0.65,0.05);
-const darkSquareMat = material(0x222833,0.5,0.15);
-const selectedMat = new THREE.MeshStandardMaterial({
-  color:0x42d392,transparent:true,opacity:0.48,roughness:0.5
+// BIDAK PUTIH: EMAS
+const whiteMat = material(0xd4ad58,.48,.32);
+
+// BIDAK HITAM: HITAM
+const blackMat = material(0x101216,.48,.22);
+
+// AKSEN EMAS
+const goldMat = material(0xb58a37,.5,.4);
+
+// WARNA PAPAN DENGAN KONTRAS LEBIH LEMBUT
+const lightSquareMat = material(0xaaa9a2,.8,.02);
+const darkSquareMat = material(0x292d34,.75,.05);
+
+const selectedMat = new THREE.MeshBasicMaterial({
+  color:0x42a878,
+  transparent:true,
+  opacity:.38,
+  depthWrite:false
 });
-const moveMat = new THREE.MeshStandardMaterial({
-  color:0x42d392,transparent:true,opacity:0.75
+
+const moveMat = new THREE.MeshBasicMaterial({
+  color:0x42a878,
+  transparent:true,
+  opacity:.55,
+  depthWrite:false
 });
-const captureMat = new THREE.MeshStandardMaterial({
-  color:0xff6262,transparent:true,opacity:0.75
+
+const captureMat = new THREE.MeshBasicMaterial({
+  color:0xc65353,
+  transparent:true,
+  opacity:.55,
+  depthWrite:false
 });
 
 function box(parent,w,h,d,mat,x,y,z) {
-  const mesh = new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
+  const mesh = new THREE.Mesh(
+    new THREE.BoxGeometry(w,h,d),mat
+  );
   mesh.position.set(x,y,z);
   mesh.castShadow = true;
   mesh.receiveShadow = true;
@@ -288,109 +492,164 @@ function cylinder(parent,rt,rb,h,mat,x,y,z,segments=32) {
   return mesh;
 }
 
-function sphere(parent,r,mat,x,y,z,scaleX=1,scaleY=1,scaleZ=1) {
-  const mesh = new THREE.Mesh(new THREE.SphereGeometry(r,24,16),mat);
+function sphere(parent,r,mat,x,y,z,sx=1,sy=1,sz=1) {
+  const mesh = new THREE.Mesh(
+    new THREE.SphereGeometry(r,24,16),mat
+  );
   mesh.position.set(x,y,z);
-  mesh.scale.set(scaleX,scaleY,scaleZ);
+  mesh.scale.set(sx,sy,sz);
   mesh.castShadow = true;
   parent.add(mesh);
   return mesh;
 }
 
 function squareToWorld(square) {
-  const file = files.indexOf(square[0]);
-  const rank = Number(square[1]) - 1;
+  const fileIndex = files.indexOf(square[0]);
+  const rankIndex = Number(square[1])-1;
+
   return {
-    x:(file-3.5)*S,
-    z:(3.5-rank)*S
+    x:(fileIndex-3.5)*S,
+    z:(3.5-rankIndex)*S
   };
 }
 
-function worldToSquare(x,z) {
-  const file = Math.round(x/S + 3.5);
-  const rank = Math.round(3.5 - z/S);
-  if (file < 0 || file > 7 || rank < 0 || rank > 7) return null;
-  return files[file] + (rank+1);
+function boxMaterial(color,roughness=.5,metalness=.1) {
+  return new THREE.MeshStandardMaterial({
+    color,roughness,metalness
+  });
 }
 
 function createBoard() {
   boardGroup = new THREE.Group();
   scene.add(boardGroup);
 
-  // Alas berlapis agar papan terlihat modern dan terangkat.
-  box(boardGroup,BOARD+0.62,0.12,BOARD+0.62,material(0x080b10,0.35,0.55),0,-0.02,0);
-  box(boardGroup,BOARD+0.42,0.09,BOARD+0.42,material(0x202936,0.28,0.75),0,0.065,0);
-  box(boardGroup,BOARD+0.18,0.07,BOARD+0.18,material(0x0c1119,0.32,0.45),0,0.13,0);
-  box(boardGroup,BOARD+0.12,0.025,BOARD+0.12,goldMat,0,0.175,0);
+  // Struktur papan modern berlapis.
+  box(
+    boardGroup,BOARD+.62,.12,BOARD+.62,
+    boxMaterial(0x080b10,.4,.35),
+    0,-.02,0
+  );
 
-  for (let rank=0; rank<8; rank++) {
-    for (let file=0; file<8; file++) {
-      const square = files[file] + (rank+1);
+  box(
+    boardGroup,BOARD+.42,.09,BOARD+.42,
+    boxMaterial(0x202631,.4,.45),
+    0,.065,0
+  );
+
+  box(
+    boardGroup,BOARD+.18,.07,BOARD+.18,
+    boxMaterial(0x0c1119,.4,.3),
+    0,.13,0
+  );
+
+  // Bingkai emas tipis berada di bawah permukaan kotak.
+  box(
+    boardGroup,BOARD+.12,.025,BOARD+.12,
+    goldMat,0,.175,0
+  );
+
+  for(let rank=0;rank<8;rank++) {
+    for(let file=0;file<8;file++) {
+      const square=files[file]+(rank+1);
       const x=(file-3.5)*S;
       const z=(3.5-rank)*S;
       const isLight=(file+rank)%2===0;
-      const tile = box(
-        boardGroup,S-0.012,0.055,S-0.012,
-        isLight?lightSquareMat:darkSquareMat,x,BOARD_Y,z
-      );
-      tile.userData.square=square;
-      squareMeshes[square]=tile;
 
-      // Bidang klik transparan di atas kotak.
-      const hit = new THREE.Mesh(
-        new THREE.PlaneGeometry(S,S),
-        new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide})
+      const tile=box(
+        boardGroup,S-.012,.055,S-.012,
+        isLight?lightSquareMat:darkSquareMat,
+        x,BOARD_Y,z
       );
+
+      tile.userData.square=square;
+
+      // Bidang tak terlihat untuk mendeteksi klik pada kotak kosong.
+      const hit=new THREE.Mesh(
+        new THREE.PlaneGeometry(S,S),
+        new THREE.MeshBasicMaterial({
+          visible:false,
+          side:THREE.DoubleSide
+        })
+      );
+
       hit.rotation.x=-Math.PI/2;
-      hit.position.set(x,BOARD_Y+0.035,z);
+      hit.position.set(x,BOARD_Y+.035,z);
       hit.userData.square=square;
       boardGroup.add(hit);
-      squareMeshes[square+'_hit']=hit;
     }
   }
 
-  // Bingkai aksen emas.
-  const edgeY=BOARD_Y+0.03;
-  box(boardGroup,BOARD+0.18,0.025,0.025,goldMat,0,edgeY,BOARD/2+0.075);
-  box(boardGroup,BOARD+0.18,0.025,0.025,goldMat,0,edgeY,-BOARD/2-0.075);
-  box(boardGroup,0.025,0.025,BOARD+0.18,goldMat,BOARD/2+0.075,edgeY,0);
-  box(boardGroup,0.025,0.025,BOARD+0.18,goldMat,-BOARD/2-0.075,edgeY,0);
+  // Garis bingkai emas.
+  const edgeY=BOARD_Y+.03;
 
-  // Tulisan NUGREEN di bagian tengah papan.
+  box(
+    boardGroup,BOARD+.18,.018,.025,
+    goldMat,0,edgeY,BOARD/2+.075
+  );
+
+  box(
+    boardGroup,BOARD+.18,.018,.025,
+    goldMat,0,edgeY,-BOARD/2-.075
+  );
+
+  box(
+    boardGroup,.025,.018,BOARD+.18,
+    goldMat,BOARD/2+.075,edgeY,0
+  );
+
+  box(
+    boardGroup,.025,.018,BOARD+.18,
+    goldMat,-BOARD/2-.075,edgeY,0
+  );
+
+  // Logo NUGREEN transparan di tengah papan.
   const brandCanvas=document.createElement('canvas');
   brandCanvas.width=1024;
   brandCanvas.height=256;
+
   const ctx=brandCanvas.getContext('2d');
   ctx.clearRect(0,0,1024,256);
   ctx.textAlign='center';
   ctx.textBaseline='middle';
   ctx.font='bold 110px Arial';
-  ctx.fillStyle='rgba(210,175,103,0.20)';
+  ctx.fillStyle='rgba(190,151,69,0.16)';
   ctx.fillText('NUGREEN',512,128);
+
   const texture=new THREE.CanvasTexture(brandCanvas);
+
   const brand=new THREE.Mesh(
-    new THREE.PlaneGeometry(BOARD*0.78,BOARD*0.195),
+    new THREE.PlaneGeometry(BOARD*.78,BOARD*.195),
     new THREE.MeshBasicMaterial({
-      map:texture,transparent:true,depthWrite:false,side:THREE.DoubleSide
+      map:texture,
+      transparent:true,
+      depthWrite:false,
+      side:THREE.DoubleSide
     })
   );
+
   brand.rotation.x=-Math.PI/2;
-  brand.position.set(0,BOARD_Y+0.031,0);
+  brand.position.set(0,BOARD_Y+.031,0);
   boardGroup.add(brand);
 
   // Kaki papan.
-  const footMat=material(0x111722,0.32,0.65);
-  for (const x of [-BOARD/2+0.35,BOARD/2-0.35]) {
-    for (const z of [-BOARD/2+0.35,BOARD/2-0.35]) {
-      cylinder(boardGroup,0.14,0.19,0.28,footMat,x,-0.18,z,8);
+  const footMat=boxMaterial(0x111722,.4,.4);
+
+  for(const x of [-BOARD/2+.35,BOARD/2-.35]) {
+    for(const z of [-BOARD/2+.35,BOARD/2-.35]) {
+      cylinder(
+        boardGroup,.14,.19,.28,
+        footMat,x,-.18,z,8
+      );
     }
   }
 }
 
 function addLathe(parent,points,mat,x,y,z) {
   const geometry=new THREE.LatheGeometry(
-    points.map(p=>new THREE.Vector2(p[0],p[1])),32
+    points.map(p=>new THREE.Vector2(p[0],p[1])),
+    32
   );
+
   const mesh=new THREE.Mesh(geometry,mat);
   mesh.position.set(x,y,z);
   mesh.castShadow=true;
@@ -401,95 +660,137 @@ function addLathe(parent,points,mat,x,y,z) {
 
 function createPiece(type,color,square) {
   const group=new THREE.Group();
-  const mat=color==='w'?whiteMat:blackMat;
-  const trim=color==='w'?goldMat:material(0x555b65,0.3,0.55);
 
-  // Bentuk dasar dan cincin dekoratif.
-  cylinder(group,0.31,0.34,0.10,mat,0,0.055,0);
-  cylinder(group,0.28,0.28,0.045,trim,0,0.125,0);
-  cylinder(group,0.23,0.26,0.13,mat,0,0.205,0);
+  // Penting: putih menggunakan emas, hitam menggunakan hitam.
+  const mat=color==='w'?whiteMat:blackMat;
+  const trim=color==='w'
+    ?goldMat
+    :boxMaterial(0x292d34,.45,.25);
+
+  cylinder(group,.31,.34,.10,mat,0,.055,0);
+  cylinder(group,.28,.28,.045,trim,0,.125,0);
+  cylinder(group,.23,.26,.13,mat,0,.205,0);
 
   const profiles={
-    p:[[0.20,0.20],[0.18,0.26],[0.13,0.31],[0.11,0.42],[0.15,0.50],[0.19,0.58],[0.16,0.66],[0.10,0.72],[0,0.74]],
-    r:[[0.20,0.20],[0.19,0.30],[0.14,0.38],[0.14,0.59],[0.21,0.61],[0.21,0.68],[0.16,0.68],[0.16,0.75],[0,0.75]],
-    b:[[0.20,0.20],[0.17,0.31],[0.11,0.42],[0.10,0.54],[0.16,0.66],[0.13,0.76],[0.09,0.82],[0,0.85]],
-    q:[[0.21,0.20],[0.18,0.30],[0.12,0.42],[0.11,0.57],[0.18,0.66],[0.23,0.70],[0.18,0.77],[0.22,0.81],[0,0.81]],
-    k:[[0.21,0.20],[0.18,0.31],[0.12,0.43],[0.12,0.61],[0.19,0.68],[0.15,0.75],[0.11,0.80],[0,0.80]]
+    p:[
+      [.20,.20],[.18,.26],[.13,.31],[.11,.42],
+      [.15,.50],[.19,.58],[.16,.66],[.10,.72],[0,.74]
+    ],
+    r:[
+      [.20,.20],[.19,.30],[.14,.38],[.14,.59],
+      [.21,.61],[.21,.68],[.16,.68],[.16,.75],[0,.75]
+    ],
+    b:[
+      [.20,.20],[.17,.31],[.11,.42],[.10,.54],
+      [.16,.66],[.13,.76],[.09,.82],[0,.85]
+    ],
+    q:[
+      [.21,.20],[.18,.30],[.12,.42],[.11,.57],
+      [.18,.66],[.23,.70],[.18,.77],[.22,.81],[0,.81]
+    ],
+    k:[
+      [.21,.20],[.18,.31],[.12,.43],[.12,.61],
+      [.19,.68],[.15,.75],[.11,.80],[0,.80]
+    ]
   };
 
   if(type==='n') {
-    // Silueta kuda: badan miring dan kepala tegak.
-    addLathe(group,[[0.20,0.20],[0.18,0.30],[0.13,0.42],[0.15,0.50],[0.22,0.55],[0,0.57]],mat,0,0,0);
-    const neck=box(group,0.17,0.35,0.16,mat,0.015,0.68,0.015);
-    neck.rotation.z=-0.30;
-    sphere(group,0.115,mat,0.075,0.83,0.02,0.9,1.2,0.8);
-    const ear=box(group,0.07,0.15,0.07,mat,0.11,0.96,0.015);
-    ear.rotation.z=-0.20;
-    sphere(group,0.025,trim,0.165,0.85,0.065,1,1,0.7);
+    addLathe(
+      group,
+      [[.20,.20],[.18,.30],[.13,.42],[.15,.50],[.22,.55],[0,.57]],
+      mat,0,0,0
+    );
+
+    const neck=box(
+      group,.17,.35,.16,mat,.015,.68,.015
+    );
+    neck.rotation.z=-.30;
+
+    sphere(group,.115,mat,.075,.83,.02,.9,1.2,.8);
+
+    const ear=box(
+      group,.07,.15,.07,mat,.11,.96,.015
+    );
+    ear.rotation.z=-.20;
+
+    sphere(group,.025,trim,.165,.85,.065,1,1,.7);
   } else {
     addLathe(group,profiles[type],mat,0,0,0);
   }
 
   if(type==='p') {
-    sphere(group,0.15,mat,0,0.79,0);
+    sphere(group,.15,mat,0,.79,0);
   }
+
   if(type==='b') {
-    sphere(group,0.105,mat,0,0.85,0);
-    box(group,0.035,0.16,0.035,trim,0,0.87,0);
+    sphere(group,.105,mat,0,.85,0);
+    box(group,.035,.16,.035,trim,0,.87,0);
   }
+
   if(type==='r') {
-    cylinder(group,0.21,0.21,0.07,mat,0,0.72,0);
+    cylinder(group,.21,.21,.07,mat,0,.72,0);
+
     for(let i=0;i<4;i++) {
       const a=i*Math.PI/2;
-      box(group,0.105,0.10,0.105,mat,Math.cos(a)*0.14,0.79,Math.sin(a)*0.14);
+      box(
+        group,.105,.10,.105,mat,
+        Math.cos(a)*.14,.79,Math.sin(a)*.14
+      );
     }
   }
+
   if(type==='q') {
-    sphere(group,0.065,trim,0,0.84,0);
+    sphere(group,.065,trim,0,.84,0);
+
     for(let i=0;i<5;i++) {
       const a=i*Math.PI*2/5;
-      sphere(group,0.045,trim,Math.cos(a)*0.19,0.82,Math.sin(a)*0.19);
+      sphere(
+        group,.045,trim,
+        Math.cos(a)*.19,.82,Math.sin(a)*.19
+      );
     }
   }
+
   if(type==='k') {
-    box(group,0.075,0.30,0.075,trim,0,0.91,0);
-    box(group,0.22,0.075,0.075,trim,0,0.96,0);
+    box(group,.075,.30,.075,trim,0,.91,0);
+    box(group,.22,.075,.075,trim,0,.96,0);
   }
 
   const pos=squareToWorld(square);
-  group.position.set(pos.x,BOARD_Y+0.04,pos.z);
+  group.position.set(pos.x,BOARD_Y+.04,pos.z);
   group.userData.square=square;
   group.userData.color=color;
   group.userData.type=type;
   pieceGroup.add(group);
-  pieceMeshes[square]=group;
+
   return group;
 }
 
-function renderPieces() {
+function clearPieceGroup() {
   while(pieceGroup.children.length) {
-    const child=pieceGroup.children[0];
-    pieceGroup.remove(child);
-    disposeObject(child);
-  }
-  pieceMeshes={};
+    const obj=pieceGroup.children[0];
+    pieceGroup.remove(obj);
 
-  const board=game.board();
-  for(let row=0;row<8;row++) {
-    for(let col=0;col<8;col++) {
-      const p=board[row][col];
-      if(!p) continue;
-      const square=files[col]+(8-row);
-      createPiece(p.type,p.color,square);
-    }
+    obj.traverse(child=>{
+      if(child.geometry) child.geometry.dispose();
+    });
   }
 }
 
-function disposeObject(object) {
-  object.traverse?.(o=>{
-    if(o.geometry) o.geometry.dispose();
-    // Shared materials are retained.
-  });
+function renderPieces() {
+  clearPieceGroup();
+
+  const board=game.board();
+
+  for(let row=0;row<8;row++) {
+    for(let col=0;col<8;col++) {
+      const piece=board[row][col];
+      if(!piece) continue;
+
+      const square=files[col]+(8-row);
+      createPiece(piece.type,piece.color,square);
+    }
+  }
 }
 
 function clearMarkers() {
@@ -501,55 +802,68 @@ function clearMarkers() {
 }
 
 function addMarker(square,mat,isCapture=false) {
-  const p=squareToWorld(square);
+  const pos=squareToWorld(square);
+
   const mesh=new THREE.Mesh(
     isCapture
-      ? new THREE.RingGeometry(0.30,0.37,32)
-      : new THREE.CircleGeometry(0.14,24),
+      ?new THREE.RingGeometry(.30,.37,32)
+      :new THREE.CircleGeometry(.14,24),
     mat
   );
+
   mesh.rotation.x=-Math.PI/2;
-  mesh.position.set(p.x,BOARD_Y+0.07,p.z);
+  mesh.position.set(pos.x,BOARD_Y+.07,pos.z);
   markerGroup.add(mesh);
 }
 
 function showSelection(square) {
   selected=square;
-  legalMoves=game.moves({square,verbose:true});
+  legalMoves=square?game.moves({square,verbose:true}):[];
   clearMarkers();
 
   if(square) addMarker(square,selectedMat);
+
   legalMoves.forEach(move=>{
-    const isCapture=move.flags.includes('c') || move.flags.includes('e');
-    addMarker(move.to,isCapture?captureMat:moveMat,isCapture);
+    const capture=move.flags.includes('c')||move.flags.includes('e');
+    addMarker(move.to,capture?captureMat:moveMat,capture);
   });
 }
 
 function setupScene() {
   scene=new THREE.Scene();
-  scene.background=new THREE.Color(0x080b10);
+  scene.background=new THREE.Color(0x090c11);
 
-  camera=new THREE.PerspectiveCamera(42,1,0.1,100);
+  camera=new THREE.PerspectiveCamera(42,1,.1,100);
   camera.position.set(8.7,10.5,11.5);
 
-  renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
+  renderer=new THREE.WebGLRenderer({
+    antialias:true,
+    alpha:false
+  });
+
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
   renderer.shadowMap.enabled=true;
   renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=.8;
+
   stage.appendChild(renderer.domElement);
 
   controls=new THREE.OrbitControls(camera,renderer.domElement);
   controls.enableDamping=true;
-  controls.dampingFactor=0.07;
-  controls.target.set(0,0.1,0);
+  controls.dampingFactor=.07;
+  controls.target.set(0,.1,0);
   controls.minDistance=8;
   controls.maxDistance=21;
   controls.maxPolarAngle=Math.PI/2.05;
 
-  scene.add(new THREE.HemisphereLight(0xdbe7ff,0x20232b,1.55));
+  // Pencahayaan lebih lembut.
+  scene.add(
+    new THREE.HemisphereLight(0xcbd3df,0x171b22,.65)
+  );
 
-  const key=new THREE.DirectionalLight(0xffedcf,2.3);
+  const key=new THREE.DirectionalLight(0xffe6b0,.85);
   key.position.set(-5,12,7);
   key.castShadow=true;
   key.shadow.mapSize.set(2048,2048);
@@ -559,16 +873,17 @@ function setupScene() {
   key.shadow.camera.bottom=-9;
   scene.add(key);
 
-  const fill=new THREE.DirectionalLight(0x8caee7,0.65);
+  const fill=new THREE.DirectionalLight(0x8caee7,.22);
   fill.position.set(7,7,-8);
   scene.add(fill);
 
   const floor=new THREE.Mesh(
     new THREE.PlaneGeometry(200,200),
-    material(0x080b10,0.9,0.05)
+    boxMaterial(0x090c11,.9,.02)
   );
+
   floor.rotation.x=-Math.PI/2;
-  floor.position.y=-0.34;
+  floor.position.y=-.34;
   floor.receiveShadow=true;
   scene.add(floor);
 
@@ -583,16 +898,21 @@ function setupScene() {
   createBoard();
   renderPieces();
   resize();
+
   renderer.domElement.addEventListener('pointerdown',onBoardClick);
   window.addEventListener('resize',resize);
+
   animate();
 }
 
 function resize() {
   if(!renderer) return;
+
   const w=stage.clientWidth;
   const h=stage.clientHeight;
+
   if(!w||!h) return;
+
   renderer.setSize(w,h,false);
   camera.aspect=w/h;
   camera.updateProjectionMatrix();
@@ -600,13 +920,17 @@ function resize() {
 
 function animate() {
   requestAnimationFrame(animate);
+
   if(controls) controls.update();
-  if(renderer&&scene&&camera) renderer.render(scene,camera);
+
+  if(renderer&&scene&&camera) {
+    renderer.render(scene,camera);
+  }
 }
 
 function resetCamera() {
   camera.position.set(8.7,10.5,11.5);
-  controls.target.set(0,0.1,0);
+  controls.target.set(0,.1,0);
   controls.update();
 }
 
@@ -614,36 +938,55 @@ function onBoardClick(event) {
   if(busy||gameOver||game.turn()!=='w') return;
 
   const rect=renderer.domElement.getBoundingClientRect();
+
   pointer.x=((event.clientX-rect.left)/rect.width)*2-1;
   pointer.y=-((event.clientY-rect.top)/rect.height)*2+1;
+
   raycaster.setFromCamera(pointer,camera);
 
   const hits=raycaster.intersectObjects(
-    [...pieceGroup.children,...boardGroup.children],true
+    [...pieceGroup.children,...boardGroup.children],
+    true
   );
+
   if(!hits.length) return;
 
   let obj=hits[0].object;
   let square=null;
+
   while(obj) {
-    if(obj.userData && obj.userData.square) {
+    if(obj.userData&&obj.userData.square) {
       square=obj.userData.square;
       break;
     }
     obj=obj.parent;
   }
+
   if(!square) return;
 
-  const movesTo=legalMoves.filter(m=>m.to===square);
-  if(selected && movesTo.length) {
+  const movesTo=legalMoves.filter(move=>move.to===square);
+
+  if(selected&&movesTo.length) {
     const chosen=movesTo[0];
     let promotion='q';
+
     if(chosen.flags.includes('p')) {
-      const answer=prompt('Promosi pion: ketik q (menteri), r (benteng), b (gajah), atau n (kuda).','q');
-      if(answer && 'qrbn'.includes(answer.toLowerCase())) promotion=answer.toLowerCase();
+      const answer=prompt(
+        'Promosi pion: q = menteri, r = benteng, b = gajah, n = kuda.',
+        'q'
+      );
+
+      if(answer&&'qrbn'.includes(answer.toLowerCase())) {
+        promotion=answer.toLowerCase();
+      }
     }
 
-    const move=game.move({from:selected,to:square,promotion});
+    const move=game.move({
+      from:selected,
+      to:square,
+      promotion
+    });
+
     if(move) {
       afterHumanMove();
       return;
@@ -651,7 +994,8 @@ function onBoardClick(event) {
   }
 
   const piece=game.get(square);
-  if(piece && piece.color==='w') {
+
+  if(piece&&piece.color==='w') {
     showSelection(square);
   } else {
     showSelection(null);
@@ -662,44 +1006,63 @@ function afterHumanMove() {
   showSelection(null);
   renderPieces();
   updateUI();
+
   if(checkGameOver()) return;
+
   makeAIMove();
 }
 
 function makeAIMove() {
   if(gameOver) return;
+
   busy=true;
   const token=++searchToken;
+
   $('thinking').textContent='AI sedang berpikir...';
   $('message').textContent='Giliran AI. Tunggu sebentar.';
 
-  // Beri browser kesempatan menggambar UI sebelum pencarian.
   setTimeout(()=>{
-    if(token!==searchToken || gameOver) return;
+    if(token!==searchToken||gameOver) return;
+
     let best=null;
+
     try {
-      const level=Number($('difficulty').value);
-      best=findBestMove(level);
-    } catch(err) {
-      console.error(err);
+      best=findBestMove(Number($('difficulty').value));
+    } catch(error) {
+      console.error('Kesalahan AI:',error);
     }
 
-    if(token!==searchToken || gameOver) return;
-    if(best) game.move(best.san);
+    if(token!==searchToken||gameOver) return;
+
+    if(best) {
+      game.move(best.san);
+    }
 
     busy=false;
     $('thinking').textContent='';
+
     renderPieces();
     showSelection(null);
     updateUI();
     checkGameOver();
-  },80);
+  },60);
 }
 
-const VALUES={p:100,n:320,b:335,r:500,q:900,k:20000};
+const VALUES={
+  p:100,
+  n:320,
+  b:335,
+  r:500,
+  q:900,
+  k:20000
+};
 
+// Nilai positif menguntungkan putih, negatif menguntungkan hitam.
 function evaluateBoard() {
-  if(game.in_checkmate()) return game.turn()==='w' ? -100000 : 100000;
+  if(game.in_checkmate()) {
+    return game.turn()==='w'?-100000:100000;
+  }
+
   if(game.in_draw()) return 0;
 
   const board=game.board();
@@ -709,35 +1072,37 @@ function evaluateBoard() {
     for(let col=0;col<8;col++) {
       const p=board[row][col];
       if(!p) continue;
+
       const sign=p.color==='w'?1:-1;
       score+=sign*VALUES[p.type];
 
-      // Bonus kecil untuk menguasai pusat dan memajukan bidak.
-      const center=3.5-(Math.abs(3.5-col)+Math.abs(3.5-row))/2;
+      const center=3.5-
+        (Math.abs(3.5-col)+Math.abs(3.5-row))/2;
+
       score+=sign*center*4;
 
       if(p.type==='p') {
-        const advancement=p.color==='w' ? 6-row : row-1;
+        const advancement=p.color==='w'?6-row:row-1;
         score+=sign*advancement*5;
       }
     }
   }
-
-  // Mobilitas: posisi dengan lebih banyak langkah cenderung lebih aktif.
-  const turn=game.turn();
-  const mobility=game.moves().length;
-  score+=(turn==='w'?1:-1)*mobility*1.5;
 
   return score;
 }
 
 function moveOrderScore(move) {
   let score=0;
-  if(move.captured) score+=10*VALUES[move.captured]-VALUES[move.piece];
+
+  if(move.captured) {
+    score+=10*VALUES[move.captured]-VALUES[move.piece];
+  }
+
   if(move.promotion) score+=VALUES[move.promotion];
   if(move.san.includes('+')) score+=35;
   if(move.san.includes('#')) score+=100000;
   if(move.san==='O-O'||move.san==='O-O-O') score+=25;
+
   return score;
 }
 
@@ -747,11 +1112,12 @@ function orderedMoves() {
 }
 
 function minimax(depth,alpha,beta,maximizing,ply) {
-  if(depth===0 || game.game_over()) {
+  if(depth===0||game.game_over()) {
     const score=evaluateBoard();
-    // Prefer quicker wins and slower losses.
+
     if(score>90000) return score-ply;
     if(score< -90000) return score+ply;
+
     return score;
   }
 
@@ -760,25 +1126,39 @@ function minimax(depth,alpha,beta,maximizing,ply) {
 
   if(maximizing) {
     let best=-Infinity;
-    for(const m of moves) {
-      game.move(m.san);
-      const score=minimax(depth-1,alpha,beta,false,ply+1);
+
+    for(const move of moves) {
+      game.move(move.san);
+
+      const score=minimax(
+        depth-1,alpha,beta,false,ply+1
+      );
+
       game.undo();
+
       if(score>best) best=score;
       if(best>alpha) alpha=best;
       if(beta<=alpha) break;
     }
+
     return best;
   } else {
     let best=Infinity;
-    for(const m of moves) {
-      game.move(m.san);
-      const score=minimax(depth-1,alpha,beta,true,ply+1);
+
+    for(const move of moves) {
+      game.move(move.san);
+
+      const score=minimax(
+        depth-1,alpha,beta,true,ply+1
+      );
+
       game.undo();
+
       if(score<best) best=score;
       if(best<beta) beta=best;
       if(beta<=alpha) break;
     }
+
     return best;
   }
 }
@@ -786,26 +1166,34 @@ function minimax(depth,alpha,beta,maximizing,ply) {
 function findBestMove(level) {
   const depth=level===1?1:level===2?2:3;
   const moves=orderedMoves();
+
   if(!moves.length) return null;
 
-  let bestScore=-Infinity;
+  // AI hitam berusaha meminimalkan evaluasi putih.
+  let bestScore=Infinity;
   let bestMoves=[];
 
-  for(const m of moves) {
-    game.move(m.san);
-    const score=minimax(depth-1,-Infinity,Infinity,false,1);
+  for(const move of moves) {
+    game.move(move.san);
+
+    // Setelah langkah hitam, giliran putih: maximizing = true.
+    const score=minimax(
+      depth-1,-Infinity,Infinity,true,1
+    );
+
     game.undo();
 
-    if(score>bestScore) {
+    if(score<bestScore) {
       bestScore=score;
-      bestMoves=[m];
+      bestMoves=[move];
     } else if(score===bestScore) {
-      bestMoves.push(m);
+      bestMoves.push(move);
     }
   }
 
-  // Random choice among equally valued moves makes AI less predictable.
-  return bestMoves[Math.floor(Math.random()*bestMoves.length)];
+  return bestMoves[
+    Math.floor(Math.random()*bestMoves.length)
+  ];
 }
 
 function checkGameOver() {
@@ -816,16 +1204,19 @@ function checkGameOver() {
   $('thinking').textContent='';
 
   if(game.in_checkmate()) {
-    const winner=game.turn()==='w'?'AI (Hitam)':'Kamu (Putih)';
+    const winner=game.turn()==='w'
+      ?'AI (Hitam)'
+      :'Kamu (Putih)';
+
     $('message').textContent='Skakmat! Pemenang: '+winner+'.';
   } else if(game.in_stalemate()) {
-    $('message').textContent='Remis: stalemate, tidak ada langkah legal.';
+    $('message').textContent='Remis: tidak ada langkah legal.';
   } else if(game.in_threefold_repetition()) {
-    $('message').textContent='Remis: posisi yang sama terulang tiga kali.';
+    $('message').textContent='Remis: posisi terulang tiga kali.';
   } else if(game.insufficient_material()) {
-    $('message').textContent='Remis: materi bidak tidak cukup untuk skakmat.';
+    $('message').textContent='Remis: materi bidak tidak cukup.';
   } else if(game.in_draw()) {
-    $('message').textContent='Permainan remis.';
+    $('message').textContent='Permainan berakhir remis.';
   } else {
     $('message').textContent='Permainan selesai.';
   }
@@ -836,14 +1227,25 @@ function checkGameOver() {
 
 function updateUI() {
   const history=game.history();
+
   $('moveCount').textContent=history.length;
   $('levelValue').textContent=$('difficulty').value;
 
   if(!gameOver) {
-    $('turnBadge').textContent=game.turn()==='w'?'Giliran: Putih':'Giliran: AI';
-    $('message').textContent=game.in_check()
-      ? (game.turn()==='w'?'Kamu sedang skak!':'AI sedang skak!')
-      : (game.turn()==='w'?'Giliran kamu. Pilih bidak putih.':'Giliran AI.');
+    $('turnBadge').textContent=
+      game.turn()==='w'?'Giliran: Putih':'Giliran: AI';
+
+    if(game.in_check()) {
+      $('message').textContent=
+        game.turn()==='w'
+          ?'Kamu sedang skak!'
+          :'AI sedang skak!';
+    } else {
+      $('message').textContent=
+        game.turn()==='w'
+          ?'Giliran kamu. Pilih bidak emas.'
+          :'Giliran AI.';
+    }
   }
 
   if(!history.length) {
@@ -852,11 +1254,19 @@ function updateUI() {
   }
 
   let html='';
+
   for(let i=0;i<history.length;i+=2) {
     const white=history[i]||'';
     const black=history[i+1]||'';
-    html+=`<div class="move-line"><span>${i/2+1}.</span><span>${white}</span><span>${black}</span></div>`;
+
+    html+=
+      '<div class="move-line">'+
+      '<span>'+(Math.floor(i/2)+1)+'.</span>'+
+      '<span>'+white+'</span>'+
+      '<span>'+black+'</span>'+
+      '</div>';
   }
+
   $('history').innerHTML=html;
   $('history').scrollTop=$('history').scrollHeight;
 }
@@ -864,10 +1274,12 @@ function updateUI() {
 function newGame() {
   searchToken++;
   game.reset();
+
   selected=null;
   legalMoves=[];
   busy=false;
   gameOver=false;
+
   $('thinking').textContent='';
   clearMarkers();
   renderPieces();
@@ -883,13 +1295,18 @@ function undoMove() {
 
   if(game.history().length===0) return;
 
-  // Undo satu giliran penuh: langkah AI dan langkah pemain.
+  // Batalkan langkah AI terlebih dahulu jika AI sudah bergerak.
   game.undo();
-  if(game.turn()==='b' && game.history().length>0) game.undo();
+
+  // Jika langkah terakhir sekarang milik putih, batalkan juga.
+  if(game.turn()==='b'&&game.history().length>0) {
+    game.undo();
+  }
 
   gameOver=false;
   selected=null;
   legalMoves=[];
+
   clearMarkers();
   renderPieces();
   updateUI();
@@ -898,6 +1315,7 @@ function undoMove() {
 $('newGame').addEventListener('click',newGame);
 $('undo').addEventListener('click',undoMove);
 $('resetCamera').addEventListener('click',resetCamera);
+
 $('difficulty').addEventListener('change',()=>{
   $('levelValue').textContent=$('difficulty').value;
 });
